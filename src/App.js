@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Landing from './Components/Landing/Landing'
-import Login from './Components/Login/Login'
-import GMSetUp from './Components/GMSetUp/GMSetUp'
-import CombatPage from './Components/CombatPage/CombatPage'
-import PlayerSetUp from './Components/PlayerSetUp/PlayerSetUp'
+import Routes from './Routes'
+
 
 class App extends Component {
   render() {
@@ -13,11 +10,7 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">{"Dungeons & Dragons Combat Tracking"}</h1>
         </header>
-        <Landing />
-        <Login />
-        <GMSetUp />
-        <CombatPage />
-        <PlayerSetUp />
+        <Routes />
       </div>
     );
   }

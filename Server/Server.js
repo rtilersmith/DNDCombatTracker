@@ -17,6 +17,9 @@ app.use(session({
 	saveUninitialized: false
 }))
 
+//http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
+
+
 
 
 const {SERVER_PORT}=process.env
