@@ -9,6 +9,7 @@ const initialState = {
 const SET_ROLE='SET_ROLE'
 const EMAIL_INPUT='EMAIL_INPUT'
 const PASSWORD_INPUT='PASSWORD_INPUT'
+const ADD_COMBATANTS='ADD_COMBATANTS'
 
 export default function reducer (state = initialState, action){
 	switch (action.type) {
@@ -19,7 +20,10 @@ export default function reducer (state = initialState, action){
 		return {...state, email:action.payload};
 
 		case PASSWORD_INPUT:
-		return {...state, password:action.payload}
+		return {...state, password:action.payload};
+
+		case ADD_COMBATANTS:
+		return { combatants: [...state.combatants, action.payload]}
 
 		default:
 		return state;
@@ -45,5 +49,12 @@ export function passwordInput(e){
 	return {
 		type: PASSWORD_INPUT,
 		payload:e
+	}
+}
+
+export function addCombatants(obj){
+	return {
+		type: ADD_COMBATANTS,
+		payload: obj
 	}
 }
