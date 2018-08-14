@@ -1,7 +1,8 @@
 const express=require('express'),
 	  session=require('express-session'),
 	  massive=require('massive'),
-	  bodyPar=require('body-parser');
+	  bodyPar=require('body-parser')
+	  CombatCtrl=require('./Controllers/CombatCtrl');
 	  require('dotenv').config()
 
 const app=express()
@@ -16,6 +17,12 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }))
+
+app.get('/api/combatants', CombatCtrl.read);
+app.post('/api/combatants', CombatCtrl.create);
+app.get('/api/combatant/:id', CombatCtrl.readOne)
+app.put('/api/combatant/:id', CombatCtrl.update);
+app.delete('/api/combatant/:id', CombatCtrl.delete);
 
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 

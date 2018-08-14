@@ -6,13 +6,12 @@ import { connect } from 'react-redux'
 function GMSetUp(props){
 	return(
 		<div>
-		{console.log(props.combatants.length)}
 			GMSetUp
 			<AddEnemies />
 			{props.combatants.length>0?
-			props.combatants.map(c=>{
+			props.combatants.map((c, i)=>{
 				return(	
-				<CombatantList combatant={c}/>)
+				<CombatantList key={i} combatant={c}/>)
 				})
 			:<div>No combatants</div>}
 		</div>
