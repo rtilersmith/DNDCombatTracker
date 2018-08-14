@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { emailInput, passwordInput} from '../../Ducks/reducer'
+import { emailInput, passwordInput} from '../../Ducks/shared'
 
 class Login extends Component{
 	render(){
@@ -20,11 +20,12 @@ class Login extends Component{
 		)
 	}
 }
-function mapStateToProps(state) {
+
+let mapStateToProps=(state)=>{
 	return {
-		role: state.role,
-		email: state.email,
-		password: state.password
+		role: state.shared.role,
+		email: state.shared.email,
+		password: state.shared.password
 	}
 }
 export default connect(mapStateToProps, {emailInput, passwordInput})(Login)
