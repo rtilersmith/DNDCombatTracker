@@ -50,7 +50,9 @@ module.exports = {
 	delete: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let { id } = req.body;
+			let { id } = req.params;
+			let dropped = await db.removeCombatant(id)
+			res.send(dropped)
 
 		} catch (error) {
 			console.log('failed to update combatant:', error)
