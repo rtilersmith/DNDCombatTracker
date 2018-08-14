@@ -18,3 +18,7 @@ CREATE TABLE Combatants (
 	Current_Init INTEGER,
 	Character_ID INTEGER references CombatantInfo
 );
+
+ALTER TABLE combatantinfo
+DROP COLUMN skills;
+
