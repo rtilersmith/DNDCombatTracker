@@ -16,11 +16,11 @@ class GMSetUp extends Component{
 				GMSetUp
 				<AddEnemies />
 				{this.props.combatants.length>0?
-				this.props.combatants.map((c, i)=>{
+				this.props.combatants.map((c)=>{
 					console.log(c)
 					return(	
 					<div>
-						<CombatantList key={i} combatant={c}/>
+						<CombatantList key={c.id} combatant={c}/>
 						<button onClick={()=>this.props.dropCombatant(c)}>Remove</button>
 					</div>
 				)
