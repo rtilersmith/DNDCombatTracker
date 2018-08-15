@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/player'
-import { addCombatant } from '../../Ducks/shared'
+import { addCombatant } from '../../Ducks/gm'
 
 class PlayerSetUp extends Component {
-	constructor(props){
-		super(props)
-	}
 	
 	render(props){
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant } = this.props;

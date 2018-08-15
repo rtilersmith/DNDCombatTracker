@@ -47,4 +47,4 @@ class CombatatantList extends Component{
 
 
 
-export default CombatatantList
+export default connect(null)(CombatatantList)
