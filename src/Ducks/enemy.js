@@ -1,3 +1,4 @@
+
 const initialState = {
 	name: '',
 	health: 0,
@@ -12,6 +13,7 @@ const initialState = {
 	curhealth: 0
 }
 
+// const FULFILLED = '_FULFILLED'
 const SET_NAME = 'SET_NAME'
 const SET_HEALTH = 'SET_HEALTH'
 const SET_AC = 'SET_AC'
@@ -24,35 +26,46 @@ const SET_INTEL = 'SET_INTEL'
 const SET_CHA = 'SET_CHA'
 const SET_CURHEALTH = 'SET_CURHEALTH'
 
-export default function reducer(state = initialState, action){
+
+export default function reducer(state=initialState, action){
 	switch (action.type) {
 		case SET_NAME:
 		return {...state, name:action.payload};
+
 		case SET_HEALTH:			
 		return {...state, health:action.payload};
+
 		case SET_AC:
 		return {...state, ac:action.payload};
+
 		case SET_INIT:
 		return {...state, init:action.payload};
+
 		case SET_STRENGTH:
 		return {...state, strength:action.payload};
+
 		case SET_DEX:
 		return {...state, dex:action.payload};
+
 		case SET_CON:
 		return {...state, con:action.payload};
+
 		case SET_WIS:
 		return {...state, wis:action.payload};
+
 		case SET_INTEL:
 		return {...state, intel:action.payload};
+
 		case SET_CHA:
 		return {...state, cha:action.payload};
+
 		case SET_CURHEALTH:
-		return {...state, curhealth:(state.curhealth+action.payload)};
+		return {...state, curhealth:(state.curhealth + action.payload)};
 
 		default:
 			return state;
 	}
-}
+}		
 
 export function name(name) {
 	return {

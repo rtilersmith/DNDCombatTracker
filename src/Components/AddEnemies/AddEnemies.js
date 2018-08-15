@@ -1,13 +1,28 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { getEnemies } from '../../Ducks/gm'
+import CustomEnemy from '../CustomEnemy/CustomEnemy'
 
 class AddEnemies extends Component{
-	render(props){
+	componentDidMount(){
+		this.props.getEnemies()
+	}
+	
+	render(){
 		return (
 			<div>
-				AddEnemies
+				List goes here: Don't put code here until you can have a scrolling list.
+				<h3>Got a custom enemy?</h3>
+				<CustomEnemy />
 			</div>
 		)
 	}
 }
 
-export default AddEnemies
+let mapStateToProps=(state)=>{
+	return {
+		enemies:state.gm.enemies
+	}
+}
+
+export default connect(mapStateToProps, {getEnemies} )(AddEnemies)

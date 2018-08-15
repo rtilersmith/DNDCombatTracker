@@ -2,7 +2,8 @@ const express=require('express'),
 	  session=require('express-session'),
 	  massive=require('massive'),
 	  bodyPar=require('body-parser')
-	  CombatCtrl=require('./Controllers/CombatCtrl');
+	  CombatCtrl=require('./Controllers/CombatCtrl')
+	  EnemyCtrl=require('./Controllers/EnemyCtrl');
 	  require('dotenv').config()
 
 const app=express()

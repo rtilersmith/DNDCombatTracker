@@ -11,7 +11,7 @@ class CombatatantList extends Component{
 	}
 
 	changeInit=()=>{
-		let base= +this.props.combatant.init;
+		let base= this.props.combatant.initiative;
 		let num = +this.state.inputInit
 		let initiative=base+ num;
 		this.setState({
@@ -25,25 +25,29 @@ class CombatatantList extends Component{
 		this.setState({
 			inputInit: n
 		})
-		console.log(this.state.inputInit)
+	}
+
+	resetInit=()=>{
+		this.setState({
+			initiative:this.props.combatant.initiative
+		})
 	}
 
 	render(){
-		let { name, init } = this.props.combatant
+		let { name, initiative } = this.props.combatant
 	return (
 		<div>
 			<div>
-				combatant: {name}
+				<h5>{name}</h5>
 				<br/>
-				Initiative: {this.state.initiative>init?this.state.initiative:init}
+				Initiative: {this.state.initiative> initiative? this.state.initiative: initiative}
 				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
+				<button onClick={this.resetInit}>Reset Initiative</button>
 			</div>
 		</div>
 	)
 	}
 }
-
-
 
 
 

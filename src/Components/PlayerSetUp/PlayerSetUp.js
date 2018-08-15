@@ -14,8 +14,7 @@ class PlayerSetUp extends Component {
 				<input placeholder="NAME" type='text' style={styles.name}
 				onChange={(e)=>name(e.target.value)}/>
 				<br/>	
-				<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)
-				changeHealth(e.target.value)}}/>	
+				<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)}}/>	
 				<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
 				<input placeholder="Initiative Bonus" type='number' onChange={(e)=>init(e.target.value)}/>	
 				<br/>	
@@ -27,7 +26,7 @@ class PlayerSetUp extends Component {
 				<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
 				<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
 				</form>
-				<Link to='/combat' onClick={()=>{addCombatant(this.props.player)}}><button>Ready?</button>
+				<Link to='/combat' onClick={()=>{addCombatant(this.props.player); changeHealth(this.props.player.health)}}><button>Ready?</button>
 				</Link>
 			</div>
 		)

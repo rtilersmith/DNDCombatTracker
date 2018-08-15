@@ -9,18 +9,18 @@ class GMSetUp extends Component{
 	componentDidMount(){
 		this.props.getCombatants()
 	}
+
 	render(){
-		console.log('combatants', this.props.combatants)
 		return(
 			<div>
 				GMSetUp
 				<AddEnemies />
+				<h2>Combatants</h2>
 				{this.props.combatants.length>0?
-				this.props.combatants.map((c)=>{
-					console.log(c)
+				this.props.combatants.map((c, i)=>{
 					return(	
-					<div>
-						<CombatantList key={c.id} combatant={c}/>
+					<div key={i}>
+						<CombatantList combatant={c}/>
 						<button onClick={()=>this.props.dropCombatant(c)}>Remove</button>
 					</div>
 				)
@@ -32,7 +32,6 @@ class GMSetUp extends Component{
 }
 
 function mapStateToProps(state){
-	console.log('map', state.gm)
 	return {
 		combatants: state.gm.combatants
 	}
