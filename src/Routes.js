@@ -14,6 +14,7 @@ export default function Routes (){
 			<Route path='/gm' component={GMSetUp} />
 			<Route path='/playersetup' component={PlayerSetUp} />
 			<Route path='/combat' component={CombatPage} />
+			{/* <Route path='/selected' */}
 		</Switch>
 	)
 }

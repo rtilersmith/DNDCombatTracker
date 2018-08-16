@@ -13,6 +13,7 @@ const ADD_COMBATANT='ADD_COMBATANT'
 const DROP_COMBATANT='DROP_COMBATANT'
 const GET_COMBATANTS='GET_COMBATANTS'
 const GET_ENEMIES='GET_ENEMIES'
+const ADD_ENEMY='ADD_ENEMY'
 
 
 export default function reducer (state = initialState, action){
@@ -32,6 +33,9 @@ export default function reducer (state = initialState, action){
 
 		case GET_COMBATANTS+FULFILLED:
 		return { ...state, combatants: action.payload.data}
+
+		case ADD_ENEMY+FULFILLED:
+		return {...state, combatants: [...state.combatants, action.payload.data]}
 
 		default:
 		return state;
@@ -73,4 +77,13 @@ export function getEnemies(){
 		type: GET_ENEMIES,
 		payload: axios.get('http://www.dnd5eapi.co/api/monsters/')
 	}
+}
+
+export function addEnemy(num){
+	let enemy=axios.get(`http://www.dnd5eapi.co/api/monsters/${num}`)
+	console.log(enemy)
+	// return {
+	// 	type: ADD_ENEMY,
+	// 	payload: 
+	// }
 }

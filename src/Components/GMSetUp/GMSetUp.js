@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import CombatantList from '../CombatantList/CombatantList'
 import AddEnemies from '../AddEnemies/AddEnemies'
+import CustomEnemy from '../CustomEnemy/CustomEnemy'
 import { connect } from 'react-redux'
 import { dropCombatant, getCombatants } from '../../Ducks/gm'
 
@@ -15,6 +16,8 @@ class GMSetUp extends Component{
 			<div>
 				GMSetUp
 				<AddEnemies />
+				<h3>Got a custom enemy?</h3>
+				<CustomEnemy />
 				<h2>Combatants</h2>
 				{this.props.combatants.length>0?
 				this.props.combatants.map((c, i)=>{
@@ -22,6 +25,7 @@ class GMSetUp extends Component{
 					<div key={i}>
 						<CombatantList combatant={c}/>
 						<button onClick={()=>this.props.dropCombatant(c)}>Remove</button>
+						
 					</div>
 				)
 					})
