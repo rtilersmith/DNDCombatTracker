@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import onClickOutside from 'react-onclickoutside'
+
 
 class CombatatantList extends Component{
 	constructor(){
@@ -10,6 +12,13 @@ class CombatatantList extends Component{
 			selected:false
 		}
 	}
+
+
+	handleClickOutside=event=>{
+		this.setState({
+		  selected: false
+		})
+	  }
 
 	changeInit=()=>{
 		let base= this.props.combatant.initiative;
@@ -41,24 +50,41 @@ class CombatatantList extends Component{
 	}
 
 	render(){
-		let { name, initiative } = this.props.combatant
+		
+		let { name, initiative, ac, strength, dex, con, wis, intel, cha, hp, current_hp } = this.props.combatant
+		console.log(this.props.combatant.current_init)
 		return (
-			!this.state.selected?
+			<div>
+				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
+				</div>
+			{!this.state.selected?
 				<div>
-					<h5>{name}</h5>
 					<br/>
 					Initiative: {this.state.initiative> initiative? this.state.initiative: initiative}
 					<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
 					<button onClick={this.resetInit}>Reset Initiative</button>
-					<input type="checkbox" name='combatant' onChange={this.toggle} />
 				</div>
 
 				:
 
 				<div>
-				{console.log(this.props.combatant)}
-					<h5>{name}</h5>
-				</div>
+					<div>
+						<p><b>Armor Class:</b>{ac}
+						<b>Initiative:</b>{initiative}
+						<b>Health:</b>
+						<b>Max</b>{hp}
+						<b>Current</b>{current_hp}
+						</p>
+
+					</div>
+					<div>
+						<h4>Saving Throws</h4>
+						<p><b>Strength:</b>{strength}<b>Dexterity:</b>{dex}<b>Constitution:</b>{con}<b>Wisdom:</b>{wis}<b>Intelligence:</b>{intel}<b>Charisma:</b>{cha}
+						</p>
+					</div>
+
+				</div>}
+			</div>
 			
 		)
 	}
@@ -66,4 +92,13 @@ class CombatatantList extends Component{
 
 
 
-export default connect(null)(CombatatantList)
+export default connect(null)(onClickOutside(CombatatantList))
+
+let styles = {
+	button: {
+		textDecoration:'none',
+		border:'none',
+		fontStyle:'bold',
+		fontSize:'100%',
+	}
+}
