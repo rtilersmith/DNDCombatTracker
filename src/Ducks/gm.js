@@ -14,6 +14,8 @@ const DROP_COMBATANT='DROP_COMBATANT'
 const GET_COMBATANTS='GET_COMBATANTS'
 const GET_ENEMIES='GET_ENEMIES'
 const ADD_ENEMY='ADD_ENEMY'
+const UPDATE_HP='UPDATE_HP'
+const UPDATE_INIT='UPDATE_INIT'
 
 
 export default function reducer (state = initialState, action){
@@ -35,6 +37,12 @@ export default function reducer (state = initialState, action){
 		return { ...state, combatants: action.payload.data}
 
 		case ADD_ENEMY+FULFILLED:
+		return {...state, combatants: [...state.combatants, action.payload.data]}
+
+		case UPDATE_HP+FULFILLED:
+		return {...state, combatants: [...state.combatants, action.payload.data]}
+
+		case UPDATE_INIT+FULFILLED:
 		return {...state, combatants: [...state.combatants, action.payload.data]}
 
 		default:
@@ -84,5 +92,18 @@ export let addEnemy= (enemy)=>{
 	return {
 		type: ADD_ENEMY,
 		payload: axios.post('api/combatants', enemy)
+	}
+}
+
+export function updateHp(id, obj){
+	return {
+		type:UPDATE_HP,
+		payload:axios.put(`api/combatant/${id}`,obj)
+	}
+}
+export function updateInit(id, obj){
+	return {
+		type:UPDATE_INIT,
+		payload:axios.put(`api/combatant/${id}`,obj)
 	}
 }

@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
+import { updateInit, updateHp } from '../../Ducks/gm'
 
 
 class CombatatantList extends Component{
-	constructor(){
-		super()
+	constructor(props){
+		super(props)
 		this.state={
-			initiative:0,
-			inputInit:'',
+			initiative:this.props.combatant.current_init,
+			inputInit:0,
 			selected:false
 		}
 	}
@@ -21,13 +22,9 @@ class CombatatantList extends Component{
 	  }
 
 	changeInit=()=>{
-		let base= this.props.combatant.initiative;
-		let num = +this.state.inputInit
-		let initiative=base+ num;
-		this.setState({
-			initiative,
-			inputInit:''
-		})
+		let { inputInit, initiative } = this.state;
+		let num = inputInit!==0?inputInit + initiative: initiative
+		this.props.updateInit(this.props.combatant.id,{"current_init":num})
 		
 	}
 
@@ -41,6 +38,7 @@ class CombatatantList extends Component{
 		this.setState({
 			initiative:this.props.combatant.initiative
 		})
+		this.changeInit()
 	}
 
 	toggle=()=>{
@@ -51,23 +49,23 @@ class CombatatantList extends Component{
 
 	render(){
 		
-		let { name, initiative, ac, strength, dex, con, wis, intel, cha, hp, current_hp } = this.props.combatant
-		console.log(this.props.combatant.current_init)
+		let { name, initiative, ac, strength, dex, con, wis, intel, cha, hp, current_hp, current_init } = this.props.combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
+				Initiative: {current_init> initiative? current_init: initiative}
+				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
 				</div>
 			{!this.state.selected?
 				<div>
 					<br/>
-					Initiative: {this.state.initiative> initiative? this.state.initiative: initiative}
-					<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
 					<button onClick={this.resetInit}>Reset Initiative</button>
 				</div>
 
 				:
 
 				<div>
+					{console.log(this.props.combatant)}
 					<div>
 						<p><b>Armor Class:</b>{ac}
 						<b>Initiative:</b>{initiative}
@@ -92,7 +90,7 @@ class CombatatantList extends Component{
 
 
 
-export default connect(null)(onClickOutside(CombatatantList))
+export default connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList))
 
 let styles = {
 	button: {
