@@ -6,7 +6,8 @@ class CombatatantList extends Component{
 		super()
 		this.state={
 			initiative:0,
-			inputInit:''
+			inputInit:'',
+			selected:false
 		}
 	}
 
@@ -33,19 +34,33 @@ class CombatatantList extends Component{
 		})
 	}
 
+	toggle=()=>{
+		this.setState({
+			selected: !this.state.selected
+		})
+	}
+
 	render(){
 		let { name, initiative } = this.props.combatant
-	return (
-		<div>
-			<div>
-				<h5>{name}</h5>
-				<br/>
-				Initiative: {this.state.initiative> initiative? this.state.initiative: initiative}
-				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
-				<button onClick={this.resetInit}>Reset Initiative</button>
-			</div>
-		</div>
-	)
+		return (
+			!this.state.selected?
+				<div>
+					<h5>{name}</h5>
+					<br/>
+					Initiative: {this.state.initiative> initiative? this.state.initiative: initiative}
+					<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
+					<button onClick={this.resetInit}>Reset Initiative</button>
+					<input type="checkbox" name='combatant' onChange={this.toggle} />
+				</div>
+
+				:
+
+				<div>
+				{console.log(this.props.combatant)}
+					<h5>{name}</h5>
+				</div>
+			
+		)
 	}
 }
 
