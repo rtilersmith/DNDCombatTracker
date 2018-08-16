@@ -35,7 +35,7 @@ export default function reducer (state = initialState, action){
 		return { ...state, combatants: action.payload.data}
 
 		case ADD_ENEMY+FULFILLED:
-		return {...state, combatants: [...state.combatants, action.payload.data]}
+		return {...state, combatants: [...state.combatants, action.payload]}
 
 		default:
 		return state;
@@ -79,11 +79,26 @@ export function getEnemies(){
 	}
 }
 
-export function addEnemy(num){
-	let enemy=axios.get(`http://www.dnd5eapi.co/api/monsters/${num}`)
+export let addEnemy=async (num)=>{
+	let enemy= await axios.get(`http://www.dnd5eapi.co/api/monsters/${num}`).then((res)=>{
+		return (
+			res.data
+		)
+	})
 	console.log(enemy)
+	let { name, armor_class, constitution, constitution_save, dexterity, dexterity_save, intelligence, intelligence_save, strength_save, wisdom, wisdom_save, charisma, charisma_save, hit_points} = enemy
+	let ac=armor_class;
+	let hp=hit_points;
+	let strength= strength_save? strength_save: ((enemy.strength-10)/2)
+	let con= constitution_save? constitution_save: ((constitution-10)/2)
+	let dex= dexterity_save? dexterity_save: ((dexterity-10)/2)
+	let wis= wisdom_save? wisdom_save: ((wisdom-10)/2)
+	let intel= intelligence_save? intelligence_save: ((intelligence-10)/2)
+	let cha= charisma_save? charisma_save: ((charisma-10)/2)
+	let init=(dexterity-10)/2
+	let newEnemy={name, ac, hp, strength, con, dex, wis, intel, cha, init}
 	// return {
 	// 	type: ADD_ENEMY,
-	// 	payload: 
+	// 	payload: axios.post('api/combatants', newEnemy)
 	// }
 }
