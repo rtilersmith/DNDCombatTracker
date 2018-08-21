@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { emailInput, passwordInput} from '../../Ducks/shared'
 
 class Login extends Component{
+	
+
 	render(){
 		return(
 			<div>

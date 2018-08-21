@@ -5,14 +5,22 @@ import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHeal
 import { addCombatant } from '../../Ducks/gm'
 
 class PlayerSetUp extends Component {
+
+	validation=()=>{
+		let x = this.props.player.name
+		if (x===""){
+			alert('Your character needs a name')
+		}
+	}
 	
 	render(props){
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant } = this.props;
 		return (
 			<div>
-				<form>
+				<form name='playerForm'>
 				<input placeholder="NAME" type='text' style={styles.name}
-				onChange={(e)=>name(e.target.value)}/>
+				onChange={(e)=>name(e.target.value)}
+				/>
 				<br/>	
 				<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)}}/>	
 				<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
@@ -26,7 +34,7 @@ class PlayerSetUp extends Component {
 				<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
 				<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
 				</form>
-				<Link to='/combat' onClick={()=>{addCombatant(this.props.player); changeHealth(this.props.player.health)}}><button>Ready?</button>
+				<Link to='/combat' onClick={()=>{addCombatant(this.props.player); changeHealth(this.props.player.health)}}><input type='submit' value="Ready?"/>
 				</Link>
 			</div>
 		)

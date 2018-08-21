@@ -1,16 +1,18 @@
 const express=require('express'),
 	  session=require('express-session'),
 	  massive=require('massive'),
-	  bodyPar=require('body-parser')
-	  CombatCtrl=require('./Controllers/CombatCtrl')
-	  EnemyCtrl=require('./Controllers/EnemyCtrl');
+	  bodyPar=require('body-parser'),
+	  CombatCtrl=require('./Controllers/CombatCtrl'),
+	  socket_io = require('socket.io');
 	  require('dotenv').config()
-
-const app=express()
+	  
+	  const app=express()
 massive(process.env.CONNECTION_STRING).then(db=>{
 	app.set('db', db)
 	console.log('db connect success!')
 	})
+
+
 
 app.use(bodyPar.json())
 app.use(session({
@@ -32,6 +34,14 @@ app.delete('/api/combatant/:id', CombatCtrl.delete);
 
 const {SERVER_PORT}=process.env
 
-app.listen(SERVER_PORT, ()=> {
+const server = app.listen(SERVER_PORT, ()=> {
 	console.log('How do you want to do this?', SERVER_PORT)
+})
+
+const io = socket_io(server)
+
+io.on('connection', function(socket){
+
+	socket.emit('start', /*emit params sent as obj*/)
+
 })
