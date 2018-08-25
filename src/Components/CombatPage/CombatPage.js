@@ -3,29 +3,30 @@ import { connect } from 'react-redux'
 import { changeHealth } from '../../Ducks/player'
 
 class CombatPage extends Component{
+
 	render(props){
 		let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth}=this.props
 		return (
 			<div>
-				{name}<br/>
-				{health}<br/>
-				{ac}<br/>
-				{init}<br/>
-				{strength}<br/>
-				{dex}<br/>
-				{con}<br/>
-				{wis}<br/>
-				{intel}<br/>
-				{cha}<br/>
-				{curHealth}<br/>
-
+				Name:{name}<br/>
+				Max Health:{health}<br/>
+				Current Health:{curHealth}<br/>
+				Armor Class:{ac}<br/>
+				Initiative:{init}<br/>
+				Saving Throws:
+				Strength:{strength}<br/>
+				Dexterity:{dex}<br/>
+				Constitution:{con}<br/>
+				Wisdom:{wis}<br/>
+				Intelligence{intel}<br/>
+				Charisma{cha}<br/>
 			</div>
 		)
 	}
 }
 
 let mapStateToProps=(state)=>{
-	let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth}=state.player
+	let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth}=state.player;
 	return {
 		name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth,
 		gmView: state.gm.curHealth

@@ -25,7 +25,6 @@ class GMSetUp extends Component{
 					<div key={i}>
 						<CombatantList combatant={c}/>
 						<button onClick={()=>this.props.dropCombatant(c)}>Remove</button>
-						
 					</div>
 				)
 					})

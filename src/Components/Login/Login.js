@@ -10,13 +10,13 @@ class Login extends Component{
 		return(
 			<div>
 				<h2>Welcome {this.props.role}</h2>
-				<h3>Please Login</h3>
+				<h4>Please Login</h4>
 				<br/>
 				<form>
 				<input type='text' placeholder="email" value={this.props.email} onChange={(e)=>this.props.emailInput(e.target.value)} required/>
 				<input type='password' placeholder="password" onChange={(e)=>this.props.passwordInput(e.target.value)} required/>
-				{this.props.role==="Game Master"? <Link to="gm">Login</Link> : 
-				<Link to="playersetup">Login</Link> }
+				{this.props.role==="Game Master"? <Link to="gm" className='link'>Login</Link> : 
+				<Link to="playersetup" className='link'>Login</Link> }
 				</form>
 			</div>
 		)

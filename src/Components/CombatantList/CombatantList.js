@@ -49,7 +49,7 @@ class CombatatantList extends Component{
 
 	render(){
 		
-		let { name, initiative, ac, strength, dex, con, wis, intel, cha, hp, current_hp, current_init } = this.props.combatant
+		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init } = this.props.combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
@@ -65,7 +65,6 @@ class CombatatantList extends Component{
 				:
 
 				<div>
-					{console.log(this.props.combatant)}
 					<div>
 						<p><b>Armor Class:</b>{ac}
 						<b>Initiative:</b>{initiative}
@@ -77,7 +76,7 @@ class CombatatantList extends Component{
 					</div>
 					<div>
 						<h4>Saving Throws</h4>
-						<p><b>Strength:</b>{strength}<b>Dexterity:</b>{dex}<b>Constitution:</b>{con}<b>Wisdom:</b>{wis}<b>Intelligence:</b>{intel}<b>Charisma:</b>{cha}
+						<p><b>Strength:</b>{str}<b>Dexterity:</b>{dex}<b>Constitution:</b>{con}<b>Wisdom:</b>{wis}<b>Intelligence:</b>{intel}<b>Charisma:</b>{cha}
 						</p>
 					</div>
 
