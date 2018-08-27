@@ -19,3 +19,12 @@ this.props.socket.on('start', function(/*more than on parameter must be an obj*/
 //SOCKETPROVIDER GOES AROUND THE ROUTER IN INDEX.JS
 const socket = io.connect(process.env.REACT_APP_SOCKET_URL)
 // socket.broadcast.to will go to whole room
+
+
+//used to link to a specific room
+io.on('connection', function(socket){
+	socket.join('specific room');
+  });
+  
+//used to 'emit' to the specific room
+io.to/*OR .on*/('specific room').emit('some event');

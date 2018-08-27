@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
 import { updateInit, updateHp } from '../../Ducks/gm'
 
-
 class CombatatantList extends Component{
 	constructor(props){
 		super(props)
@@ -13,7 +12,6 @@ class CombatatantList extends Component{
 			selected:false
 		}
 	}
-
 
 	handleClickOutside=event=>{
 		this.setState({
@@ -71,12 +69,13 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
+						<input type='number'/>
 						</p>
 
 					</div>
 					<div>
 						<h4>Saving Throws</h4>
-						<p><b>Strength:</b>{str}<b>Dexterity:</b>{dex}<b>Constitution:</b>{con}<b>Wisdom:</b>{wis}<b>Intelligence:</b>{intel}<b>Charisma:</b>{cha}
+						<p><b>Strength:</b>{str}  <b>Dexterity:</b>{dex}   <b>Constitution:</b>{con}  <b>Wisdom:</b>{wis}  <b>Intelligence:</b>{intel}  <b>Charisma:</b>{cha}
 						</p>
 					</div>
 
@@ -86,8 +85,6 @@ class CombatatantList extends Component{
 		)
 	}
 }
-
-
 
 export default connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList))
 

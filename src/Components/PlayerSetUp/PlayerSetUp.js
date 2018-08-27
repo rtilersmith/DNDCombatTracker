@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/player'
 import { addCombatant } from '../../Ducks/gm'
 
+
 class PlayerSetUp extends Component {
 
 	validation=()=>{

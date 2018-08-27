@@ -46,5 +46,5 @@ const io = socket_io(server)
 io.on('connection', function(socket){
 
 	socket.emit('start', /*emit params sent as obj*/)
-
+	
 })
