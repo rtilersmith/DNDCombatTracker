@@ -3,6 +3,7 @@ const express=require('express'),
 	  massive=require('massive'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
+	  AuthCtrl = require('./Controllers/AuthCtrl'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
@@ -20,6 +21,8 @@ app.use(session({
 	resave: false,
 	saveUninitialized: false
 }))
+
+app.get('/auth/callback', AuthCtrl.auth)
 
 app.get('/api/combatants', CombatCtrl.read);
 app.post('/api/combatants', CombatCtrl.create);
