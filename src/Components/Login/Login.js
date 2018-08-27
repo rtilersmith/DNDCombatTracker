@@ -10,8 +10,7 @@ class Login extends Component{
 		return(
 			<div>
 				<h2>Welcome {this.props.role}</h2>
-				<h4>Please Login</h4>
-				<br/>
+				<h3>Please Login</h3>
 				<form>
 				<input type='text' placeholder="email" value={this.props.email} onChange={(e)=>this.props.emailInput(e.target.value)} required/>
 				<input type='password' placeholder="password" onChange={(e)=>this.props.passwordInput(e.target.value)} required/>

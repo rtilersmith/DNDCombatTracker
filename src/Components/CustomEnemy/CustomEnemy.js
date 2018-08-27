@@ -1,20 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/enemy'
+import { handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/enemy'
 import { addCombatant } from '../../Ducks/gm'
 
 
 class Customenemy extends Component {
+	handleSubmit = (e)=>{
+		e.preventDefault();
+		let { name, health, ac} = this.props.enemy;
+		let { changeHealth, addCombatant } = this.props
+		if (name && health && ac){
+			addCombatant(this.props.enemy); 
+			changeHealth(health)
+		} else {
+			alert("You must have name/type, health, and AC values for your enemy")
+		}
+
+	}
+
 	render(){
-		let { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant } = this.props;
+		let { handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha} = this.props;
 		return (
 			<div>
-				<form>
-					<input placeholder="NAME" type='text' onChange={(e)=>name(e.target.value)}/>
+				<form onSubmit={this.handleSubmit} name='enemyForm'>
+					<input placeholder="Name/Type" type='text' onChange={(e)=>handleName(e.target.value)}/>
 					<br/>	
-					<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)
+					<input placeholder="Health" type='number' onChange={(e)=>{handleHealth(e.target.value)
 					}}/>	
-					<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
+					<input placeholder="Armor Class" type='number' onChange={(e)=>handleAc(e.target.value)}/>
 					<input placeholder="Initiative Bonus" type='number' onChange={(e)=>init(e.target.value)}/>	
 					<br/>	
 					<p>Saving Throw Modifiers:</p>
@@ -24,7 +37,7 @@ class Customenemy extends Component {
 					<input placeholder="Wisdom" type='number' onChange={(e)=>wis(e.target.value)}/>	
 					<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
 					<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
-					<button onClick={()=>{addCombatant(this.props.enemy); changeHealth(this.props.enemy.health)}}>Add</button>
+					<input type='submit' value="Add"/>
 				</form>
 			</div>
 		)
@@ -38,4 +51,4 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(Customenemy)
+export default connect(mapStateToProps,{ handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(Customenemy)

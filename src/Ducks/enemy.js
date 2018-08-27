@@ -67,21 +67,21 @@ export default function reducer(state=initialState, action){
 	}
 }		
 
-export function name(name) {
+export function handleName(name) {
 	return {
 		type: SET_NAME,
 		payload: name
 	}
 }
 
-export function health(health) {
+export function handleHealth(health) {
 	return {
 		type: SET_HEALTH,
 		payload: +health
 	}
 }
 
-export function ac(ac) {
+export function handleAc(ac) {
 	return {
 		type: SET_AC,
 		payload: +ac
