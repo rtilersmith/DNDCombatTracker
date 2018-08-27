@@ -5,6 +5,7 @@ h1 {
 font-size:30px;
 margin: 0 0 
 }
+
 h2 {
 font-size:27px;
 margin: 0;
@@ -17,10 +18,16 @@ h3 {
   font-family: 'Alegreya Sans', sans-serif;
   margin: 0 0 2vh;
 }
-h4
+
+h4 {
+  font-size:16px;
+  font-family: 'Alegreya Sans', sans-serif;
+	font-style: italic;
+}
 
 p{
-  font-size:17px;
+  font-size:12px;
+  font-family: 'Overpass', sans-serif;
 }
 
 

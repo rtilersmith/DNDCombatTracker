@@ -4,7 +4,7 @@ module.exports = {
 	auth: async (req, res)=>{
 		try {
 			let auth0domain = `https://${process.env.REACT_APP_AUTH0_DOMAIN}`
-			let { code } = req.query
+			let { code, role } = req.query
 			let payload = {
 				client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,
 				client_secret: process.env.AUTH0_CLIENT_SECRET,
@@ -25,11 +25,11 @@ module.exports = {
 
 			if (users.length){
 				req.session.user = users[0]
-				res.redirect('/login')
+				res.redirect(`/${role}setup`)
 			} else {
 				let users = db.createUser(userInfo)
 				req.session.user = users[0]
-				res.redirect('/login')
+				res.redirect(`/${role}setup`)
 			}
 
 		} catch (error){
