@@ -25,16 +25,16 @@ module.exports = {
 
 			if (users.length){
 				req.session.user = users[0]
-				res.redirect(`/${role}setup`)
+				res.redirect(`/#/${role}setup`)
 			} else {
 				let users = db.createUser(userInfo)
 				req.session.user = users[0]
-				res.redirect(`/${role}setup`)
+				res.redirect(`/#/${role}setup`)
 			}
 
 		} catch (error){
 			console.log('We have a problem', error)
-			res.redirect('/error')
+			res.redirect('/#/error')
 		}
 
 	}

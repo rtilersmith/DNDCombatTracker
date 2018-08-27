@@ -14,8 +14,9 @@ class Landing extends Component{
 			<div className="landingContainer">
 			<h2>Let the combat begin</h2>
 			<h3>What is your role?</h3>
-			<Link to='/login' onClick={()=>this.props.setRole('Player')}className='link'>Player</Link>
-			<Link to='/login'  onClick={()=>this.props.setRole('Game Master')}className='link'>Game Master</Link>
+			<Link to='/login' onClick={()=>this.props.setRole('player')}className='link'>Player</Link>
+			<Link to='/login'  onClick={()=>this.props.setRole('gm')}className='link'>Game Master</Link>
+			<h4>You will be redirected to Auth0 to login/register</h4>
 		</div>
 	)
 	}
