@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
 import { updateInit, updateHp } from '../../Ducks/gm'
+import axios from 'axios'
 
 class CombatatantList extends Component{
 	constructor(props){
@@ -47,7 +48,7 @@ class CombatatantList extends Component{
 
 	render(){
 		
-		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init } = this.props.combatant
+		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init, id } = this.props.combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
@@ -69,7 +70,7 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
-						<input type='number'/>
+						<button onClick={(id)=>{axios.put(`/api/combatant/${id}`, {name, current_hp}).then(resp=>{console.log(resp)})}}>test</button>
 						</p>
 
 					</div>
