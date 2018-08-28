@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
 import { updateInit, updateHp } from '../../Ducks/gm'
 import axios from 'axios'
+import { socketConnect } from 'socket.io-react' 
+// import io from 'socket.io-client'
 
 class CombatatantList extends Component{
 	constructor(props){
@@ -47,7 +49,10 @@ class CombatatantList extends Component{
 	}
 
 	render(){
-		
+		let { socket } = this.props
+		socket.on('start', function(/*more than on parameter must be an obj*/){
+
+		})		
 		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init, id } = this.props.combatant
 		return (
 			<div>
@@ -87,7 +92,7 @@ class CombatatantList extends Component{
 	}
 }
 
-export default connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList))
+export default socketConnect(connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList)))
 
 let styles = {
 	button: {

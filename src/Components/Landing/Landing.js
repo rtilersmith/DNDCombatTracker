@@ -2,14 +2,11 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { setRole } from '../../Ducks/shared'
-import io from 'socket.io-client'
-import { socketConnect } from 'socket.io-react' 
 import './Landing.css'
 
 class Landing extends Component{
 	
 	render(){
-		this.props.socket.on('start', function(/*more than on parameter must be an obj*/){})
 		return(
 			<div className="landingContainer">
 			<h2>Let the combat begin</h2>
@@ -23,4 +20,4 @@ class Landing extends Component{
 	}
 }
 
-export default socketConnect(connect(null, {setRole})(Landing))
+export default connect(null, {setRole})(Landing)

@@ -1,16 +1,40 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeHealth } from '../../Ducks/player'
+import { socketConnect } from 'socket.io-react' 
+// import io from 'socket.io-client'
+
 
 class CombatPage extends Component{
+	constructor(){
+		super()
+		this.state={
+			battleId:''
+		}
+	}
+
+	socket=()=>{
+		if(this.state.battleId){
+			this.props.socket.emit('join', {room:this.state.battleId.toUpperCase()})
+		}
+	}
+
+	handleChange=(e)=>{
+		this.setState({
+			battleId:e.target.value
+		})
+	}
 
 	render(props){
+		let { socket } = this.props
+		// socket.emit('join', function(/*more than on parameter must be an obj*/){})
 		let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth}=this.props
 		return (
 			<div>
+				battleId<input value={this.state.battleId} onChange={this.handleChange}/><button onClick={this.socket}>Connect</button>
 				Name:{name}<br/>
 				Max Health:{health}<br/>
-				Current Health:{curHealth}<br/>
+				Current Health:{curHealth}<input type='number'/><br/>
 				Armor Class:{ac}<br/>
 				Initiative:{init}<br/>
 				Saving Throws:
@@ -33,4 +57,4 @@ let mapStateToProps=(state)=>{
 	}
 }
 
-export default connect(mapStateToProps, {changeHealth})(CombatPage)
+export default socketConnect(connect(mapStateToProps, {changeHealth})(CombatPage))

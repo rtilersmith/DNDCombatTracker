@@ -2,21 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/player'
 import { addCombatant } from '../../Ducks/gm'
+import { socketConnect } from 'socket.io-react' 
+// import io from 'socket.io-client'
 
 
 class PlayerSetUp extends Component {
-
-	validation=()=>{
-		let x = this.props.player.name
-		if (x===""){
-			alert('Your character needs a name')
-		}
-	}
-
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { name, health, ac} = this.props.player;
-		let { changeHealth, addCombatant } = this.props
+		let { changeHealth, addCombatant } = this.props;
 		if (name && health && ac){
 			addCombatant(this.props.player); 
 			changeHealth(health)
@@ -24,10 +18,12 @@ class PlayerSetUp extends Component {
 		} else {
 			alert("You must have name, health, and AC values for your character")
 		}
-
 	}
 	
-	render(props){
+	render(){
+		let { socket } = this.props
+
+		socket.on('start', function(/*more than on parameter must be an obj*/){})
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha} = this.props;
 		return (
 			<div>
@@ -62,7 +58,7 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(PlayerSetUp)
+export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(PlayerSetUp))
 
 // let styles= {
 // 	name: {

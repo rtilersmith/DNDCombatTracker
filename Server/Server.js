@@ -44,7 +44,7 @@ const server = app.listen(SERVER_PORT, ()=> {
 const io = socket_io(server)
 
 io.on('connection', function(socket){
-
+	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
 	
 })
