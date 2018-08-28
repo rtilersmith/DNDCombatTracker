@@ -18,7 +18,7 @@ class GMSetUp extends Component{
 	}
 
 	render(){
-		let { socket } = this.props
+		let { socket } = this.props;
 		let battleId = this.numGenerator()
 		socket.emit('join', {battle:battleId})
 		return(

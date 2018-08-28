@@ -16,6 +16,12 @@ class CombatatantList extends Component{
 		}
 	}
 
+	componentDidMount(){
+		this.props.socket.on('battle', function(player){
+			console.log(player)
+		})
+	}
+
 	handleClickOutside=event=>{
 		this.setState({
 		  selected: false

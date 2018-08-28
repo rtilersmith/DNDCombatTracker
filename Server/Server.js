@@ -46,5 +46,12 @@ const io = socket_io(server)
 io.on('connection', function(socket){
 	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
+	socket.on('join', function(battle){
+		console.log(battle.battle)
+		socket.on('playerhealth', function(player){
+			console.log(player)
+			socket.broadcast.to(battle.battle).emit('battle', {player})
+		})
+	})
 	
 })
