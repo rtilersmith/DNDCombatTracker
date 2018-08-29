@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/player'
-import { addCombatant } from '../../Ducks/gm'
+import { name, health, ac, init, strength, dex, con, wis, intel, cha} from '../../Ducks/player'
 import { socketConnect } from 'socket.io-react' 
-// import io from 'socket.io-client'
 
 
 class PlayerSetUp extends Component {
@@ -19,12 +17,11 @@ class PlayerSetUp extends Component {
 
 	handleSubmit = (e)=>{
 		e.preventDefault();
-		let { changeHealth, addCombatant, socket, player, history } = this.props;
+		let { socket, player, history } = this.props;
 		let { name, health, ac/*, room*/ } = player;
-		if (name && health && ac /*&& room*/){
-			changeHealth(health)
-			console.log(player)
-			socket.emit('added', player) 
+		let room = this.state.battleId
+		if (name && health && ac && room){
+			socket.emit('added', {...player, room}) 
 			history.push('/combat')
 		} else {
 			alert("You must have name, health, and AC values for your character")
@@ -101,7 +98,7 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(PlayerSetUp))
+export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha})(PlayerSetUp))
 
 // let styles= {
 // 	name: {

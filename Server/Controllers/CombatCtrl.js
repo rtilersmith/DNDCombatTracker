@@ -3,11 +3,11 @@ module.exports = {
 	create: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let { name, ac, hp, strength, dex, con, wis, intel, cha, init } = req.body;
+			let { name, ac, hp, strength, dex, con, wis, intel, cha, init, room } = req.body;
 			let newCombatant = { name, ac, hp, strength, dex, con, wis, intel, cha, init }
 			let combatants = await db.createCombatant(newCombatant);
 			let Character_ID = combatants[0].id;
-			let listItem = {Character_ID, hp, init};
+			let listItem = {Character_ID, hp, init, room};
 			let part2 = await db.addToList(listItem);
 			res.send(part2[0])
 

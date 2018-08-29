@@ -4,7 +4,6 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
-	  axios = require('axios'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
