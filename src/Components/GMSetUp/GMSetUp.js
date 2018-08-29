@@ -9,18 +9,35 @@ import { socketConnect } from 'socket.io-react'
 
 
 class GMSetUp extends Component{
+	constructor(){
+		super()
+		this.state={
+			battleId:''
+		}
+	}
+
 	componentDidMount(){
+		this.numGenerator()
 		this.props.getCombatants()
 	}
-
+	
 	numGenerator=()=>{
-			return Math.random().toString(36).substr(2,9).toUpperCase()
+		this.setState({
+			battleId:(Math.random().toString(36).substr(2,9).toUpperCase())
+		})
 	}
-
-	render(){
+	
+	socketJoin=()=>{
 		let { socket } = this.props;
-		let battleId = this.numGenerator()
-		socket.emit('join', {battle:battleId})
+		let {battleId} = this.state;
+		if(battleId){
+			socket.emit('join', {battle:battleId})
+		}
+	}
+	
+	render(){
+		let {battleId}=this.state
+		this.socketJoin()
 		return(
 			<div>
 				<h2>Your battle ID is: {battleId}</h2>

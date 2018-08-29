@@ -7,6 +7,15 @@ import { socketConnect } from 'socket.io-react'
 
 
 class PlayerSetUp extends Component {
+	constructor(){
+		super()
+		this.state={
+			battleId:'',
+			lastBattleId:'',
+			healthChange:0
+		}
+	}
+
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { name, health, ac} = this.props.player;
@@ -19,6 +28,28 @@ class PlayerSetUp extends Component {
 			alert("You must have name, health, and AC values for your character")
 		}
 	}
+
+	handleId=(e)=>{
+		this.setState({
+			battleId:e.target.value,
+		})
+	}
+
+	socket=()=>{
+		let {battleId, lastBattleId} = this.state
+		let { socket } = this.props
+		if(battleId){
+			if(battleId !== lastBattleId  && lastBattleId){
+				socket.emit('leave', {battle:lastBattleId})
+				socket.emit('join', {battle:battleId.toUpperCase()})
+			} else{
+				socket.emit('join', {battle:battleId.toUpperCase()})
+			} 	
+			this.setState({
+				lastBattleId:battleId
+			})
+		}
+	}
 	
 	render(){
 		let { socket } = this.props
@@ -27,6 +58,7 @@ class PlayerSetUp extends Component {
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha} = this.props;
 		return (
 			<div>
+				Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/><button onClick={this.socket}>Connect</button>
 				<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
 					<input placeholder="Player Name" type='text'
 					onChange={(e)=>name(e.target.value)}

@@ -17,9 +17,13 @@ class CombatatantList extends Component{
 	}
 
 	componentDidMount(){
+		let name = this.props.combatant.name;
 		this.props.socket.on('battle', function(player){
-			console.log(player)
-		})
+			console.log(name)
+			// if( player.name === name ){
+				console.log(player.name)
+			// }
+	})
 	}
 
 	handleClickOutside=event=>{
@@ -59,7 +63,7 @@ class CombatatantList extends Component{
 		socket.on('start', function(/*more than on parameter must be an obj*/){
 
 		})		
-		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init, id } = this.props.combatant
+		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = this.props.combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>

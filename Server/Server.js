@@ -46,12 +46,17 @@ const io = socket_io(server)
 io.on('connection', function(socket){
 	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
-	socket.on('join', function(battle){
-		console.log(battle.battle)
-		socket.on('playerhealth', function(player){
+	socket.on('join', function(room){
+		socket.join(room.battle)
+		console.log(' user joined ',room.battle)
+		socket.on('playerHealth', function(player){
 			console.log(player)
-			socket.broadcast.to(battle.battle).emit('battle', {player})
+			io.to(room.battle).emit('battle', player)
 		})
+	})
+	socket.on('leave', function(room){
+		socket.leave(room.battle)
+		console.log('user has left room ', room.battle)
 	})
 	
 })
