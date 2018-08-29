@@ -29,11 +29,21 @@ module.exports = {
 	readOne: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			console.log(req.body)
 			let combatant = await db.getCombatant(req.body);
 			res.send(combatant);
 		} catch (error) {
 			console.log('could not retrieve combatant:' ,error)
+			res.status(500).send(error)
+		}
+	},
+	readPlayer: async (req, res)=>{
+		console.log(req.body)
+		try {
+			let db = req.app.get('db')
+			let player = await db.getPlayer(req.body)
+			res.send(player[0])
+		} catch (error) {
+			console.log('could not retrieve player:' ,error)
 			res.status(500).send(error)
 		}
 	},

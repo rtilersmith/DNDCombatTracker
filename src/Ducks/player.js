@@ -9,7 +9,7 @@ const initialState = {
 	wis: 0,
 	intel: 0,
 	cha: 0,
-	curhealth: 0
+	curHealth: 0
 }
 
 const SET_NAME = 'SET_NAME'

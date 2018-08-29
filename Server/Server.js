@@ -29,6 +29,7 @@ app.post('/api/combatants', CombatCtrl.create);
 app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
 app.delete('/api/combatant/:id', CombatCtrl.delete);
+app.post('/api/player', CombatCtrl.readPlayer)
 
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 
