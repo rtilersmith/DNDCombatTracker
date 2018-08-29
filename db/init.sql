@@ -21,6 +21,7 @@ CREATE TABLE Combatants (
 
 ALTER TABLE combatantinfo
 DROP COLUMN skills;
+ADD COLUMN room
 
 CREATE TABLE users (
 	id SERIAL PRIMARY KEY,

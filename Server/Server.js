@@ -4,6 +4,7 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
+	  axios = require('axios'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
@@ -44,7 +45,22 @@ const server = app.listen(SERVER_PORT, ()=> {
 const io = socket_io(server)
 
 io.on('connection', function(socket){
-
+	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
-
+	socket.on('join', function(room){
+		socket.join(room.battle)
+		console.log(' user joined ',room.battle)
+		socket.on('playerHealth', function(player){
+			console.log(player)
+			io.to(room.battle).emit('battle', player)
+		})
+		socket.on('added', function(player){
+			io.to(room.battle).emit('added', player)
+		})
+	})
+	socket.on('leave', function(room){
+		socket.leave(room.battle)
+		console.log('user has left room ', room.battle)
+	})
+	
 })

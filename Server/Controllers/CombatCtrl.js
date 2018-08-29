@@ -41,6 +41,9 @@ module.exports = {
 		try {
 			let db = req.app.get('db')
 			let { id } = req.body;
+			console.log(req.body)
+			res.send('good to go')
+			// let combatant = await db.updateCombatant(req.body);
 
 		} catch (error) {
 			console.log('failed to update combatant:', error)
