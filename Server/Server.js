@@ -4,6 +4,7 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
+	  axios = require('axios'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
@@ -52,6 +53,9 @@ io.on('connection', function(socket){
 		socket.on('playerHealth', function(player){
 			console.log(player)
 			io.to(room.battle).emit('battle', player)
+		})
+		socket.on('added', function(player){
+			io.to(room.battle).emit('added', player)
 		})
 	})
 	socket.on('leave', function(room){

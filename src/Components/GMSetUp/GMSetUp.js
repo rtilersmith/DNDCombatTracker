@@ -3,7 +3,7 @@ import CombatantList from '../CombatantList/CombatantList'
 import AddEnemies from '../AddEnemies/AddEnemies'
 import CustomEnemy from '../CustomEnemy/CustomEnemy'
 import { connect } from 'react-redux'
-import { dropCombatant, getCombatants } from '../../Ducks/gm'
+import { dropCombatant, getCombatants, addCombatant } from '../../Ducks/gm'
 import { socketConnect } from 'socket.io-react' 
 // import io from 'socket.io-client'
 
@@ -18,7 +18,13 @@ class GMSetUp extends Component{
 
 	componentDidMount(){
 		this.numGenerator()
-		this.props.getCombatants()
+		let {getCombatants, socket, addCombatant} = this.props
+		socket.on('added', function(player){
+			// getCombatants()
+			addCombatant(player)
+			console.log(player)
+		})
+		getCombatants()
 	}
 	
 	numGenerator=()=>{
@@ -66,4 +72,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default socketConnect(connect(mapStateToProps, { dropCombatant, getCombatants })(GMSetUp))
+export default socketConnect(connect(mapStateToProps, { dropCombatant, getCombatants, addCombatant })(GMSetUp))

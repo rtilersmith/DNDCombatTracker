@@ -12,18 +12,20 @@ class PlayerSetUp extends Component {
 		this.state={
 			battleId:'',
 			lastBattleId:'',
-			healthChange:0
+			healthChange:0,
+			connected:false
 		}
 	}
 
 	handleSubmit = (e)=>{
 		e.preventDefault();
-		let { name, health, ac} = this.props.player;
-		let { changeHealth, addCombatant } = this.props;
-		if (name && health && ac){
-			addCombatant(this.props.player); 
+		let { changeHealth, addCombatant, socket, player, history } = this.props;
+		let { name, health, ac/*, room*/ } = player;
+		if (name && health && ac /*&& room*/){
 			changeHealth(health)
-			this.props.history.push('/combat')
+			console.log(player)
+			socket.emit('added', player) 
+			history.push('/combat')
 		} else {
 			alert("You must have name, health, and AC values for your character")
 		}
@@ -50,6 +52,11 @@ class PlayerSetUp extends Component {
 			})
 		}
 	}
+	connect=()=>{
+		this.setState({
+			connected:!this.state.connected
+		})
+	}
 	
 	render(){
 		let { socket } = this.props
@@ -58,7 +65,10 @@ class PlayerSetUp extends Component {
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha} = this.props;
 		return (
 			<div>
-				Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/><button onClick={this.socket}>Connect</button>
+				{!this.state.connected?<div>
+					Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/>
+					<button onClick={()=>{this.socket();this.connect()}}>Connect</button>
+				</div>:
 				<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
 					<input placeholder="Player Name" type='text'
 					onChange={(e)=>name(e.target.value)}
@@ -79,6 +89,7 @@ class PlayerSetUp extends Component {
 					<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
 					<input type='submit' value="Ready?"/>
 				</form>
+				}
 			</div>
 		)
 	}
