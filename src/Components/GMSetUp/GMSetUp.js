@@ -20,9 +20,8 @@ class GMSetUp extends Component{
 		this.numGenerator()
 		let {getCombatants, socket, addCombatant} = this.props
 		socket.on('added', function(player){
-			// getCombatants()
 			addCombatant(player)
-			console.log(player)
+			// changeHealth(player.health)
 		})
 		getCombatants()
 	}
@@ -47,9 +46,9 @@ class GMSetUp extends Component{
 		return(
 			<div>
 				<h2>Your battle ID is: {battleId}</h2>
-				<AddEnemies />
+				<AddEnemies room={battleId}/>
 				<h3>Got a custom enemy?</h3>
-				<CustomEnemy />
+				<CustomEnemy room={battleId}/>
 				<h2>Combatants</h2>
 				{this.props.combatants.length>0?
 				this.props.combatants.map((c, i)=>{

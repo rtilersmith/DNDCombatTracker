@@ -38,19 +38,31 @@ class AddEnemies extends Component{
 			function mods(name){
 				return Math.floor((name-10)/2)
 			}
+			
 			let { name, armor_class, constitution, constitution_save, dexterity, dexterity_save, intelligence, intelligence_save, strength_save, wisdom, wisdom_save, charisma, charisma_save, hit_points} = res.data
+			
 			let ac=armor_class;
+			
 			let hp=hit_points;
+			
 			let strength= strength_save? strength_save: mods(res.data.strength)
+			
 			let con= constitution_save? constitution_save: mods(constitution)
+			
 			let dex= dexterity_save? dexterity_save: mods(dexterity)
+			
 			let wis= wisdom_save? wisdom_save: mods(wisdom)
+			
 			let intel= intelligence_save? intelligence_save: mods(intelligence)
+			
 			let cha= charisma_save? charisma_save: mods(charisma)
+			
 			let init=mods(dexterity)
 			
-			let enemy= {name, ac, hp, strength, con, dex, wis, intel, cha, init};
-			this.props.addEnemy(enemy)
+			let { room, addEnemy} = this.props
+			
+			let enemy= {name, ac, hp, strength, con, dex, wis, intel, cha, init, room};
+			addEnemy(enemy)
 		})
 	}
 	

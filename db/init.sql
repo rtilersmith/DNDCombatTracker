@@ -21,6 +21,7 @@ CREATE TABLE Combatants (
 
 ALTER TABLE combatantinfo
 DROP COLUMN skills;
+ALTER TABLE Combatants
 ADD COLUMN room
 
 CREATE TABLE users (

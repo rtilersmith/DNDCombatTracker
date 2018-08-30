@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/player'
-import { addCombatant } from '../../Ducks/gm'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
+import { name, health, ac, init, strength, dex, con, wis, intel, cha} from '../../Ducks/player'
 import { socketConnect } from 'socket.io-react' 
-// import io from 'socket.io-client'
 
 
 class PlayerSetUp extends Component {
@@ -13,18 +13,19 @@ class PlayerSetUp extends Component {
 			battleId:'',
 			lastBattleId:'',
 			healthChange:0,
-			connected:false
+			connected:false,
+			checked:false,
+			player:{}
 		}
 	}
 
 	handleSubmit = (e)=>{
 		e.preventDefault();
-		let { changeHealth, addCombatant, socket, player, history } = this.props;
+		let { socket, player, history } = this.props;
 		let { name, health, ac/*, room*/ } = player;
-		if (name && health && ac /*&& room*/){
-			changeHealth(health)
-			console.log(player)
-			socket.emit('added', player) 
+		let room = this.state.battleId
+		if (name && health && ac && room){
+			socket.emit('added', {...player, room}) 
 			history.push('/combat')
 		} else {
 			alert("You must have name, health, and AC values for your character")
@@ -57,6 +58,17 @@ class PlayerSetUp extends Component {
 			connected:!this.state.connected
 		})
 	}
+
+	returning=(e)=>{
+		e.preventDefault();
+		let {name}=this.props.player;
+		let room = this.state.battleId
+		if (name){
+			axios.post('api/player', {name, room}).then(resp=>{
+				console.log(resp.data)
+			}).catch(error=>{alert('Could not get player', error)})
+		}
+	}
 	
 	render(){
 		let { socket } = this.props
@@ -65,30 +77,48 @@ class PlayerSetUp extends Component {
 		let { name, health, ac, init, strength, dex, con, wis, intel, cha} = this.props;
 		return (
 			<div>
-				{!this.state.connected?<div>
-					Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/>
-					<button onClick={()=>{this.socket();this.connect()}}>Connect</button>
-				</div>:
-				<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
-					<input placeholder="Player Name" type='text'
-					onChange={(e)=>name(e.target.value)}
-					/>
-					<br/>	
-					<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)}}/>	
-					<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
-					<input placeholder="Initiative Bonus" type='number' onChange={(e)=>init(e.target.value)}/>	
-					<br/>	
-					<p>Saving Throw Modifiers:</p>
-					<input placeholder="Strength" type='number' onChange={(e)=>strength(e.target.value)}/>	
-					<input placeholder="Dexterity" type='number' onChange={(e)=>dex(e.target.value)}/>
-					<br/>	
-					<input placeholder="Constitution" type='number' onChange={(e)=>con(e.target.value)}/>	
-					<input placeholder="Wisdom" type='number' onChange={(e)=>wis(e.target.value)}/>	
-					<br/>
-					<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
-					<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
-					<input type='submit' value="Ready?"/>
-				</form>
+				{!this.state.connected?
+					<div>
+						Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/>
+						<button onClick={()=>{this.socket();this.connect()}}>Connect</button>
+					</div>
+				:
+					
+					<div>
+						<div>
+							Returning Player? <input type='checkbox' onClick={()=>{this.setState({checked:!this.state.checked})}}/>
+						</div>
+						{this.state.checked?
+						<div>
+							<form onSubmit={this.returning} name='returnForm'>
+								<input placeholder="Player Name" type='text' onChange={(e)=>name(e.target.value)}/>
+								<button>Confirm</button>
+							</form>
+							<Link to="/combat" player={this.state.player}>Submit</Link>
+						</div>
+						:
+						<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
+							<input placeholder="Player Name" type='text'
+							onChange={(e)=>name(e.target.value)}
+							/>
+							<br/>	
+							<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)}}/>	
+							<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
+							<input placeholder="Initiative Bonus" type='number' onChange={(e)=>init(e.target.value)}/>	
+							<br/>	
+							<p>Saving Throw Modifiers:</p>
+							<input placeholder="Strength" type='number' onChange={(e)=>strength(e.target.value)}/>	
+							<input placeholder="Dexterity" type='number' onChange={(e)=>dex(e.target.value)}/>
+							<br/>	
+							<input placeholder="Constitution" type='number' onChange={(e)=>con(e.target.value)}/>	
+							<input placeholder="Wisdom" type='number' onChange={(e)=>wis(e.target.value)}/>	
+							<br/>
+							<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
+							<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
+							<input type='submit' value="Ready?"/>
+						</form>
+					}
+					</div>
 				}
 			</div>
 		)
@@ -101,7 +131,7 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(PlayerSetUp))
+export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha})(PlayerSetUp))
 
 // let styles= {
 // 	name: {

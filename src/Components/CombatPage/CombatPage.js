@@ -6,15 +6,31 @@ import { socketConnect } from 'socket.io-react'
 
 
 class CombatPage extends Component{
-
+	constructor(){
+		super()
+		this.state={
+			healthChange:0,
+		}
+	}
 
 	addHealth = ()=>{
-		this.props.socket.emit('playerHealth', {name:this.props.name, change:this.state.healthChange})
+		let { healthChange } = this.state
+		let { socket, name, changeHealth, curHealth } = this.props;
+		changeHealth( +curHealth + healthChange)
+		socket.emit('playerHealth', {name:name, change:healthChange})
+		this.setState({
+			healthChange:0
+		})
 	}
 
 	subHealth = ()=>{
 		let neg = -(this.state.healthChange)
-		this.props.socket.emit('playerHealth', {name:this.props.name, change:neg})
+		let { socket, name, changeHealth, curHealth } = this.props;
+		changeHealth( +curHealth + neg)
+		socket.emit('playerHealth', {name, change:neg})
+		this.setState({
+			healthChange:0
+		})
 	}
 
 
@@ -34,7 +50,10 @@ class CombatPage extends Component{
 
 				Name:{name}<br/>
 				Max Health:{health}<br/>
-				Current Health:{curHealth}<input type='number' onChange={this.handleNum}/><button onClick={this.addHealth}>add</button><br/>
+				Current Health:{curHealth}<input type='number' onChange={this.handleNum}/>
+				<button onClick={this.addHealth}>+</button>
+				<button onClick={this.subHealth}>-</button>
+				<br/>
 				Armor Class:{ac}<br/>
 				Initiative:{init}<br/>
 				Saving Throws:
@@ -52,8 +71,7 @@ class CombatPage extends Component{
 let mapStateToProps=(state)=>{
 	let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth}=state.player;
 	return {
-		name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth,
-		gmView: state.gm.curHealth
+		name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth
 	}
 }
 
