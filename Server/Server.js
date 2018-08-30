@@ -88,9 +88,14 @@ io.on('connection', function(socket){
 		console.log(' user joined ',battle)
 
 	})
+
 	socket.on('leave', function(room){
 		socket.leave(room.battle)
 		console.log('user has left room ', room.battle)
+	})
+	
+	socket.on('enemyHealth', function(player){
+		io.to(battle).emit('health', player)
 	})
 	
 })

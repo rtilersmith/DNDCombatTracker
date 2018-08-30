@@ -9,7 +9,8 @@ const initialState = {
 	wis: 0,
 	intel: 0,
 	cha: 0,
-	curHealth: 0
+	curHealth: 0,
+	healthChangeVal:''
 }
 
 const SET_NAME = 'SET_NAME'
@@ -23,6 +24,7 @@ const SET_WIS = 'SET_WIS'
 const SET_INTEL = 'SET_INTEL'
 const SET_CHA = 'SET_CHA'
 const CHANGE_CURHEALTH = 'CHANGE_CURHEALTH'
+const HEALTH_CHANGE_VAL = 'HEALTH_CHANGE_VAL'
 
 export default function reducer(state = initialState, action){
 	switch (action.type) {
@@ -47,7 +49,9 @@ export default function reducer(state = initialState, action){
 		case SET_CHA:
 		return {...state, cha:action.payload};
 		case CHANGE_CURHEALTH:
-		return {...state, curHealth:action.payload}
+		return {...state, curHealth:action.payload};
+		case HEALTH_CHANGE_VAL:
+		return {...state, healthChange:action.payload}
 		default:
 			return state;
 	}
@@ -126,6 +130,13 @@ export function setCha(cha) {
 export function changeHealth(num){
 	return {
 		type:CHANGE_CURHEALTH,
+		payload: +num
+	}
+}
+
+export function setHealthChangeVal(num){
+	return {
+		type:HEALTH_CHANGE_VAL,
 		payload: +num
 	}
 }

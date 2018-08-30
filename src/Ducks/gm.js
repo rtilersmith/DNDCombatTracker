@@ -5,6 +5,7 @@ const initialState = {
 	selected:[],
 	combatants:[],
 	enemies:[],
+	battleId:''
 }
 
 const FULFILLED = '_FULFILLED'
@@ -16,6 +17,7 @@ const GET_ENEMIES='GET_ENEMIES'
 const ADD_ENEMY='ADD_ENEMY'
 const UPDATE_HP='UPDATE_HP'
 const UPDATE_INIT='UPDATE_INIT'
+const UPDATE_BATTLE_ID='UPDATE_BATTLE_ID'
 
 
 export default function reducer (state = initialState, action){
@@ -44,6 +46,9 @@ export default function reducer (state = initialState, action){
 
 		case UPDATE_INIT+FULFILLED:
 		return {...state, combatants: [...state.combatants, action.payload.data]}
+
+		case UPDATE_BATTLE_ID:
+		return {...state, battleId:action.payload}
 
 		default:
 		return state;
@@ -105,5 +110,12 @@ export function updateInit(id, obj){
 	return {
 		type:UPDATE_INIT,
 		payload:axios.put(`api/combatant/${id}`,obj)
+	}
+}
+
+export function updateBattleId(id){
+	return {
+		type: UPDATE_BATTLE_ID,
+		payload:id
 	}
 }
