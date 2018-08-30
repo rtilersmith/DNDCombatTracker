@@ -35,10 +35,9 @@ class AddEnemies extends Component{
 
 	addEnemy = (id) => {
 	axios.get(`http://www.dnd5eapi.co/api/monsters/${id}`).then((res)=>{
-			function mods(name){
-				return Math.floor((name-10)/2)
+			function mods(type){
+				return Math.floor((type-10)/2)
 			}
-			
 			let { name, armor_class, constitution, constitution_save, dexterity, dexterity_save, intelligence, intelligence_save, strength_save, wisdom, wisdom_save, charisma, charisma_save, hit_points} = res.data
 			
 			let ac=armor_class;
@@ -63,7 +62,8 @@ class AddEnemies extends Component{
 			
 			let enemy= {name, ac, hp, strength, con, dex, wis, intel, cha, init, room};
 			addEnemy(enemy)
-		})
+			alert(`${name} has been added`)
+		}).catch(error=>{alert('an error has occured:', error)})
 	}
 	
 	render(){

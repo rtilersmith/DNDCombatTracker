@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { name, health, ac, init, strength, dex, con, wis, intel, cha} from '../../Ducks/player'
+import { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } from '../../Ducks/player'
 import { socketConnect } from 'socket.io-react' 
 
 
@@ -63,9 +63,20 @@ class PlayerSetUp extends Component {
 		e.preventDefault();
 		let {name}=this.props.player;
 		let room = this.state.battleId
+		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
-				console.log(resp.data)
+				let {ac, cha, con, hp, initiative, dex, str, wis, int} = resp.data
+				alert('player found', name)
+				setAc(ac);
+				setCha(cha);
+				setCon(con);
+				setHealth(hp);
+				setInit(initiative);
+				setDex(dex);
+				setStrength(str);
+				setWis(wis);
+				setIntel(int);
 			}).catch(error=>{alert('Could not get player', error)})
 		}
 	}
@@ -74,7 +85,7 @@ class PlayerSetUp extends Component {
 		let { socket } = this.props
 
 		socket.on('start', function(/*more than on parameter must be an obj*/){})
-		let { name, health, ac, init, strength, dex, con, wis, intel, cha} = this.props;
+		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
 		return (
 			<div>
 				{!this.state.connected?
@@ -91,7 +102,7 @@ class PlayerSetUp extends Component {
 						{this.state.checked?
 						<div>
 							<form onSubmit={this.returning} name='returnForm'>
-								<input placeholder="Player Name" type='text' onChange={(e)=>name(e.target.value)}/>
+								<input placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
 								<button>Confirm</button>
 							</form>
 							<Link to="/combat" player={this.state.player}>Submit</Link>
@@ -99,22 +110,22 @@ class PlayerSetUp extends Component {
 						:
 						<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
 							<input placeholder="Player Name" type='text'
-							onChange={(e)=>name(e.target.value)}
+							onChange={(e)=>setName(e.target.value)}
 							/>
 							<br/>	
-							<input placeholder="Health" type='number' onChange={(e)=>{health(e.target.value)}}/>	
-							<input placeholder="Armor Class" type='number' onChange={(e)=>ac(e.target.value)}/>
-							<input placeholder="Initiative Bonus" type='number' onChange={(e)=>init(e.target.value)}/>	
+							<input placeholder="Health" type='number' onChange={(e)=>{setHealth(e.target.value)}}/>	
+							<input placeholder="Armor Class" type='number' onChange={(e)=>setAc(e.target.value)}/>
+							<input placeholder="Initiative Bonus" type='number' onChange={(e)=>setInit(e.target.value)}/>	
 							<br/>	
 							<p>Saving Throw Modifiers:</p>
-							<input placeholder="Strength" type='number' onChange={(e)=>strength(e.target.value)}/>	
-							<input placeholder="Dexterity" type='number' onChange={(e)=>dex(e.target.value)}/>
+							<input placeholder="Strength" type='number' onChange={(e)=>setStrength(e.target.value)}/>	
+							<input placeholder="Dexterity" type='number' onChange={(e)=>setDex(e.target.value)}/>
 							<br/>	
-							<input placeholder="Constitution" type='number' onChange={(e)=>con(e.target.value)}/>	
-							<input placeholder="Wisdom" type='number' onChange={(e)=>wis(e.target.value)}/>	
+							<input placeholder="Constitution" type='number' onChange={(e)=>setCon(e.target.value)}/>	
+							<input placeholder="Wisdom" type='number' onChange={(e)=>setWis(e.target.value)}/>	
 							<br/>
-							<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
-							<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
+							<input placeholder="Intelligence" type='number' onChange={(e)=>setIntel(e.target.value)}/>	
+							<input placeholder="Charisma" type='number' onChange={(e)=>setCha(e.target.value)}/>	
 							<input type='submit' value="Ready?"/>
 						</form>
 					}
@@ -131,7 +142,7 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default socketConnect(connect(mapStateToProps,{ name, health, ac, init, strength, dex, con, wis, intel, cha})(PlayerSetUp))
+export default socketConnect(connect(mapStateToProps,{ setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha })(PlayerSetUp))
 
 // let styles= {
 // 	name: {
