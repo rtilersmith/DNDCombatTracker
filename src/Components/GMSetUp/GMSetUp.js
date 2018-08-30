@@ -45,7 +45,7 @@ class GMSetUp extends Component{
 				this.props.combatants.map((c, i)=>{
 					return(	
 					<div key={i}>
-						<CombatantList combatant={c}/>
+						<CombatantList combatant={c} battleId={battleId}/>
 						<button onClick={()=>this.props.dropCombatant(c)}>Remove</button>
 					</div>
 				)

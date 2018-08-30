@@ -12,7 +12,8 @@ class CombatatantList extends Component{
 		this.state={
 			initiative:this.props.combatant.current_init,
 			inputInit:0,
-			selected:false
+			selected:false,
+			healthChange:0
 		}
 	}
 
@@ -25,6 +26,26 @@ class CombatatantList extends Component{
 				if( player.name === name ){
 					console.log(player.name)
 				}
+		})
+	}
+
+	addHealth = ()=>{
+		let { healthChange } = this.state
+		let { socket, name, changeHealth, curHealth } = this.props;
+		changeHealth( +curHealth + +healthChange)
+		socket.emit('enemyHealth', {name:name, change:healthChange})
+		this.setState({
+			healthChange:0
+		})
+	}
+
+	subHealth = ()=>{
+		let neg = -( +this.state.healthChange)
+		let { socket, name, changeHealth, curHealth } = this.props;
+		changeHealth( +curHealth + neg)
+		socket.emit('enemyHealth', {name, change:neg})
+		this.setState({
+			healthChange:0
 		})
 	}
 
@@ -61,8 +82,8 @@ class CombatatantList extends Component{
 	}
 
 	render(){
-		
-		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = this.props.combatant
+		let {combatant, battleId} = this.props;
+		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
@@ -84,7 +105,7 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
-						<button onClick={(id)=>{axios.put(`/api/combatant/${id}`, {name, current_hp}).then(resp=>{console.log(resp)})}}>test</button>
+						<button onClick={(id)=>{axios.put(`/api/combatant/${id}`, {name, current_hp, battleId}).then(resp=>{console.log(resp)})}}>test</button>
 						</p>
 
 					</div>

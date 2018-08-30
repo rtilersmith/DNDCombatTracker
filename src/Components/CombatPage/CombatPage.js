@@ -9,27 +9,27 @@ class CombatPage extends Component{
 	constructor(){
 		super()
 		this.state={
-			healthChange:0,
+			healthChange:'',
 		}
 	}
 
 	addHealth = ()=>{
 		let { healthChange } = this.state
 		let { socket, name, changeHealth, curHealth } = this.props;
-		changeHealth( +curHealth + healthChange)
+		changeHealth( +curHealth + +healthChange)
 		socket.emit('playerHealth', {name:name, change:healthChange})
 		this.setState({
-			healthChange:0
+			healthChange:''
 		})
 	}
 
 	subHealth = ()=>{
-		let neg = -(this.state.healthChange)
+		let neg = -( +this.state.healthChange)
 		let { socket, name, changeHealth, curHealth } = this.props;
 		changeHealth( +curHealth + neg)
 		socket.emit('playerHealth', {name, change:neg})
 		this.setState({
-			healthChange:0
+			healthChange:''
 		})
 	}
 
@@ -50,7 +50,7 @@ class CombatPage extends Component{
 
 				Name:{name}<br/>
 				Max Health:{health}<br/>
-				Current Health:{curHealth}<input type='number' onChange={this.handleNum}/>
+				Current Health:{curHealth}<input type='number' value={this.state.healthChange} onChange={this.handleNum}/>
 				<button onClick={this.addHealth}>+</button>
 				<button onClick={this.subHealth}>-</button>
 				<br/>
