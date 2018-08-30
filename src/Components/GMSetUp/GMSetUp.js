@@ -16,33 +16,24 @@ class GMSetUp extends Component{
 		}
 	}
 
-	componentDidMount(){
-		this.numGenerator()
+	componentDidMount=()=>{
 		let {getCombatants, socket, addCombatant} = this.props
+		socket.emit('join')
+		let settingState=function(resp){
+			this.setState({
+				battleId: resp.battle
+			})
+		}
+		let bound = settingState.bind(this)
+		socket.on('battle', bound)
 		socket.on('added', function(player){
 			addCombatant(player)
-			// changeHealth(player.health)
 		})
 		getCombatants()
 	}
 	
-	numGenerator=()=>{
-		this.setState({
-			battleId:(Math.random().toString(36).substr(2,9).toUpperCase())
-		})
-	}
-	
-	socketJoin=()=>{
-		let { socket } = this.props;
-		let {battleId} = this.state;
-		if(battleId){
-			socket.emit('join', {battle:battleId})
-		}
-	}
-	
 	render(){
 		let {battleId}=this.state
-		this.socketJoin()
 		return(
 			<div>
 				<h2>Your battle ID is: {battleId}</h2>

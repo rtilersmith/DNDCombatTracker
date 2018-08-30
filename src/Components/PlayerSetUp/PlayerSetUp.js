@@ -44,9 +44,9 @@ class PlayerSetUp extends Component {
 		if(battleId){
 			if(battleId !== lastBattleId  && lastBattleId){
 				socket.emit('leave', {battle:lastBattleId})
-				socket.emit('join', {battle:battleId.toUpperCase()})
+				socket.emit('playerJoin', {battle:battleId.toUpperCase()})
 			} else{
-				socket.emit('join', {battle:battleId.toUpperCase()})
+				socket.emit('playerJoin', {battle:battleId.toUpperCase()})
 			} 	
 			this.setState({
 				lastBattleId:battleId

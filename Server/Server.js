@@ -1,12 +1,18 @@
 const express=require('express'),
-	  session=require('express-session'),
+	  
 	  massive=require('massive'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
 	  path = require('path'),
-	  socket_io = require('socket.io');
-	  require('dotenv').config()
+	  socket_io = require('socket.io'),
+	  sharedsession = require("express-socket.io-session");
+	  require('dotenv').config();
+	  const session=require('express-session')({
+		  secret: process.env.SESSION_SECRET,
+		  resave: true,
+		  saveUninitialized: true
+});
 	  
 	  const app=express()
 massive(process.env.CONNECTION_STRING).then(db=>{
@@ -17,11 +23,10 @@ massive(process.env.CONNECTION_STRING).then(db=>{
 
 
 app.use(bodyPar.json())
-app.use(session({
-	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false
-}))
+
+app.use(session)
+
+
 
 app.use( express.static( `${__dirname}/../build` ) );
 
@@ -49,19 +54,39 @@ const server = app.listen(SERVER_PORT, ()=> {
 
 const io = socket_io(server)
 
+io.use(sharedsession(session)//, null, {
+	// 	autoSave:true
+	// }
+);
+
 io.on('connection', function(socket){
 	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
-	socket.on('join', function(room){
-		socket.join(room.battle)
-		console.log(' user joined ',room.battle)
+	socket.on('playerJoin', function(room){
+		socket.handshake.session.battle=room.battle
+		socket.join(room.battle);
 		socket.on('playerHealth', function(player){
-			console.log(player)
 			io.to(room.battle).emit('battle', player)
 		})
 		socket.on('added', function(player){
 			io.to(room.battle).emit('added', player)
 		})
+	})
+
+	socket.on('join', function(){
+		let battle;
+		if(!socket.handshake.session.battle){
+			battle = (Math.random().toString(36).substr(2,9).toUpperCase())
+			console.log('setting battle', battle)
+			socket.handshake.session.battle=battle;
+			socket.handshake.session.save();
+		} else {
+			battle=socket.handshake.session.battle
+		}
+		socket.join(battle);
+		socket.emit('battle', {battle})
+		console.log(' user joined ',battle)
+
 	})
 	socket.on('leave', function(room){
 		socket.leave(room.battle)

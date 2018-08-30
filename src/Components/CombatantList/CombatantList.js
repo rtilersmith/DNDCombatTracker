@@ -22,7 +22,6 @@ class CombatatantList extends Component{
 		socket.on('start', function(socket){
 		})
 		socket.on('battle', function(player){
-				console.log(name)
 				if( player.name === name ){
 					console.log(player.name)
 				}
