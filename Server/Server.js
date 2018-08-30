@@ -4,6 +4,7 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
+	  path = require('path'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
@@ -22,6 +23,8 @@ app.use(session({
 	saveUninitialized: false
 }))
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.get('/auth/callback', AuthCtrl.auth)
 
 app.get('/api/combatants', CombatCtrl.read);
@@ -34,7 +37,9 @@ app.post('/api/player', CombatCtrl.readPlayer)
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 
 
-
+app.get('*', (req, res)=>{
+	res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 const {SERVER_PORT}=process.env
 
