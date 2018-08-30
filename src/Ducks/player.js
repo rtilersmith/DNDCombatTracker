@@ -9,7 +9,7 @@ const initialState = {
 	wis: 0,
 	intel: 0,
 	cha: 0,
-	curhealth: 0
+	curHealth: 0
 }
 
 const SET_NAME = 'SET_NAME'
@@ -22,14 +22,14 @@ const SET_CON = 'SET_CON'
 const SET_WIS = 'SET_WIS'
 const SET_INTEL = 'SET_INTEL'
 const SET_CHA = 'SET_CHA'
-const SET_CURHEALTH = 'SET_CURHEALTH'
+const CHANGE_CURHEALTH = 'CHANGE_CURHEALTH'
 
 export default function reducer(state = initialState, action){
 	switch (action.type) {
 		case SET_NAME:
 		return {...state, name:action.payload};
 		case SET_HEALTH:			
-		return {...state, health:action.payload};
+		return {...state, health:action.payload, curHealth:action.payload};
 		case SET_AC:
 		return {...state, ac:action.payload};
 		case SET_INIT:
@@ -46,87 +46,87 @@ export default function reducer(state = initialState, action){
 		return {...state, intel:action.payload};
 		case SET_CHA:
 		return {...state, cha:action.payload};
-		case SET_CURHEALTH:
-		return {...state, curhealth:(state.curhealth+action.payload)};
+		case CHANGE_CURHEALTH:
+		return console.log(action.payload);
 
 		default:
 			return state;
 	}
 }
 
-export function name(name) {
+export function setName(name) {
 	return {
 		type: SET_NAME,
 		payload: name
 	}
 }
 
-export function health(health) {
+export function setHealth(health) {
 	return {
 		type: SET_HEALTH,
 		payload: +health
 	}
 }
 
-export function ac(ac) {
+export function setAc(ac) {
 	return {
 		type: SET_AC,
 		payload: +ac
 	}
 }
 
-export function init(init) {
+export function setInit(init) {
 	return {
 		type: SET_INIT,
 		payload: +init
 	}
 }
 
-export function strength(strength) {
+export function setStrength(strength) {
 	return {
 		type: SET_STRENGTH,
 		payload: +strength
 	}
 }
 
-export function dex(dex) {
+export function setDex(dex) {
 	return {
 		type: SET_DEX,
 		payload: +dex
 	}
 }
 
-export function con(con) {
+export function setCon(con) {
 	return {
 		type: SET_CON,
 		payload: +con
 	}
 }
 
-export function wis(wis) {
+export function setWis(wis) {
 	return {
 		type: SET_WIS,
 		payload: +wis
 	}
 }
 
-export function intel(intel) {
+export function setIntel(intel) {
 	return {
 		type: SET_INTEL,
 		payload: +intel
 	}
 }
 
-export function cha(cha) {
+export function setCha(cha) {
 	return {
 		type: SET_CHA,
 		payload: +cha
 	}
 }
 
-export function changeHealth(num) {
+export function changeHealth(num){
 	return {
-		type: SET_CURHEALTH,
-		payload: +num
+		type:CHANGE_CURHEALTH,
+		payload: num
 	}
 }

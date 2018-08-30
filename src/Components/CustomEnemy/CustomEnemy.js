@@ -8,9 +8,9 @@ class Customenemy extends Component {
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { name, health, ac} = this.props.enemy;
-		let { changeHealth, addCombatant } = this.props
-		if (name && health && ac){
-			addCombatant(this.props.enemy); 
+		let { changeHealth, addCombatant, room } = this.props
+		if (name && health && ac && room){
+			addCombatant({...this.props.enemy, room}); 
 			changeHealth(health)
 		} else {
 			alert("You must have name/type, health, and AC values for your enemy")

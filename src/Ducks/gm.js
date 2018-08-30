@@ -28,7 +28,7 @@ export default function reducer (state = initialState, action){
 		return {...state, selected: [action.payload]}
 
 		case ADD_COMBATANT+FULFILLED:
-		return {...state, combatants: [...state.combatants, action.payload]}
+		return {...state, combatants: [...state.combatants, action.payload.data]}
 
 		case DROP_COMBATANT+FULFILLED:
 		return { ...state, combatants: action.payload.data}

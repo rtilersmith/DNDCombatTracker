@@ -4,6 +4,7 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
+	  path = require('path'),
 	  socket_io = require('socket.io');
 	  require('dotenv').config()
 	  
@@ -22,6 +23,8 @@ app.use(session({
 	saveUninitialized: false
 }))
 
+app.use( express.static( `${__dirname}/../build` ) );
+
 app.get('/auth/callback', AuthCtrl.auth)
 
 app.get('/api/combatants', CombatCtrl.read);
@@ -29,11 +32,14 @@ app.post('/api/combatants', CombatCtrl.create);
 app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
 app.delete('/api/combatant/:id', CombatCtrl.delete);
+app.post('/api/player', CombatCtrl.readPlayer)
 
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 
 
-
+app.get('*', (req, res)=>{
+	res.sendFile(path.join(__dirname, '../build/index.html'));
+});
 
 const {SERVER_PORT}=process.env
 
@@ -44,7 +50,22 @@ const server = app.listen(SERVER_PORT, ()=> {
 const io = socket_io(server)
 
 io.on('connection', function(socket){
-
+	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
-
+	socket.on('join', function(room){
+		socket.join(room.battle)
+		console.log(' user joined ',room.battle)
+		socket.on('playerHealth', function(player){
+			console.log(player)
+			io.to(room.battle).emit('battle', player)
+		})
+		socket.on('added', function(player){
+			io.to(room.battle).emit('added', player)
+		})
+	})
+	socket.on('leave', function(room){
+		socket.leave(room.battle)
+		console.log('user has left room ', room.battle)
+	})
+	
 })

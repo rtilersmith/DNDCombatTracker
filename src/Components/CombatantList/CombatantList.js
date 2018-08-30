@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
 import { updateInit, updateHp } from '../../Ducks/gm'
-
+import axios from 'axios'
+import { socketConnect } from 'socket.io-react' 
+// import io from 'socket.io-client'
 
 class CombatatantList extends Component{
 	constructor(props){
@@ -14,6 +16,18 @@ class CombatatantList extends Component{
 		}
 	}
 
+	componentDidMount(){
+		let name = this.props.combatant.name;
+		let { socket } = this.props
+		socket.on('start', function(socket){
+		})
+		socket.on('battle', function(player){
+				console.log(name)
+				if( player.name === name ){
+					console.log(player.name)
+				}
+		})
+	}
 
 	handleClickOutside=event=>{
 		this.setState({
@@ -49,7 +63,7 @@ class CombatatantList extends Component{
 
 	render(){
 		
-		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init } = this.props.combatant
+		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = this.props.combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
@@ -71,12 +85,13 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
+						<button onClick={(id)=>{axios.put(`/api/combatant/${id}`, {name, current_hp}).then(resp=>{console.log(resp)})}}>test</button>
 						</p>
 
 					</div>
 					<div>
 						<h4>Saving Throws</h4>
-						<p><b>Strength:</b>{str}<b>Dexterity:</b>{dex}<b>Constitution:</b>{con}<b>Wisdom:</b>{wis}<b>Intelligence:</b>{intel}<b>Charisma:</b>{cha}
+						<p><b>Strength:</b>{str}  <b>Dexterity:</b>{dex}   <b>Constitution:</b>{con}  <b>Wisdom:</b>{wis}  <b>Intelligence:</b>{intel}  <b>Charisma:</b>{cha}
 						</p>
 					</div>
 
@@ -87,9 +102,7 @@ class CombatatantList extends Component{
 	}
 }
 
-
-
-export default connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList))
+export default socketConnect(connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList)))
 
 let styles = {
 	button: {
