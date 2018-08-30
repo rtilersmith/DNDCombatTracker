@@ -23,13 +23,13 @@ class GMSetUp extends Component{
 			this.setState({
 				battleId: resp.battle
 			})
+			getCombatants(this.state.battleId)
 		}
 		let bound = settingState.bind(this)
 		socket.on('battle', bound)
 		socket.on('added', function(player){
 			addCombatant(player)
 		})
-		getCombatants()
 	}
 	
 	render(){

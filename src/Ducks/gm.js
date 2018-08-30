@@ -73,10 +73,10 @@ export function addCombatant(obj){
 	}
 }
 
-export function getCombatants(){
+export function getCombatants(room){
 	return {
 		type: GET_COMBATANTS,
-		payload: axios.get('/api/combatants')
+		payload: axios.get(`/api/combatants?room=${room}`)
 	}
 }
 

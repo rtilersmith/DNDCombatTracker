@@ -19,7 +19,7 @@ module.exports = {
 	read: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-		let combatants = await db.getCombatants();
+		let combatants = await db.getCombatants(req.query);
 		res.send(combatants)
 		} catch (error) {
 			console.log('error getting combatants:', error)
