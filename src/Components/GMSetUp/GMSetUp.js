@@ -19,7 +19,6 @@ class GMSetUp extends Component{
 	componentDidMount=()=>{
 		let {getCombatants, socket, addCombatant, history } = this.props
 		socket.on('no user', function(){
-			console.log(history)
 			history.push('/')
 			
 		})

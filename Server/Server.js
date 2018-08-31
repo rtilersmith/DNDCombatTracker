@@ -59,22 +59,22 @@ io.use(sharedsession(session, {
 io.on('connection', function(socket){
 	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
-	socket.on('playerJoin', function(room){
-		socket.handshake.session.battle=room.battle
-		socket.join(room.battle);
-		socket.on('playerHealth', function(player){
-			io.to(room.battle).emit('playerHealth', player)
+	if(!socket.handshake.session.user){
+		socket.emit('no user')
+	} else {
+		socket.on('playerJoin', function(room){
+			socket.handshake.session.battle=room.battle
+			socket.join(room.battle);
+			socket.on('playerHealth', function(player){
+				io.to(room.battle).emit('playerHealth', player)
+			})
+			socket.on('added', function(player){
+				io.to(room.battle).emit('added', player)
+			})
 		})
-		socket.on('added', function(player){
-			io.to(room.battle).emit('added', player)
-		})
-	})
-
-	socket.on('join', function(){
-		let battle;
-		if(!socket.handshake.session.user){
-			socket.emit('no user')
-		} else {
+		socket.on('join', function(){
+			let battle;
+			
 			if(!socket.handshake.session.battle){
 				battle = (Math.random().toString(36).substr(2,9).toUpperCase())
 				console.log('setting battle', battle)
@@ -83,20 +83,18 @@ io.on('connection', function(socket){
 			} else {
 				battle=socket.handshake.session.battle
 			}
-		}
-		socket.join(battle);
-		socket.emit('battle', {battle})
-		console.log(' user joined ',battle)
-
-		socket.on('gmHealth', function(player){
-			io.to(battle).emit('gmHealth', player)
+			socket.join(battle);
+			socket.emit('battle', {battle})
+			console.log(' user joined ',battle)
+			
+			socket.on('gmHealth', function(player){
+				io.to(battle).emit('gmHealth', player)
+			})
 		})
-	})
-
-	socket.on('leave', function(room){
-		socket.leave(room.battle)
-		console.log('user has left room ', room.battle)
-	})
-	
-	
+		
+		socket.on('leave', function(room){
+			socket.leave(room.battle)
+			console.log('user has left room ', room.battle)
+		})
+	}
 })

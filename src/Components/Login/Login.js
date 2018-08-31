@@ -9,7 +9,6 @@ class Login extends Component{
 		let {socket, history}=this.props;
 		socket.on('start', function(/*more than on parameter must be an obj*/){})	
 		socket.on('no user', function(){
-			console.log(history)
 			history.push('/')
 			
 		})	

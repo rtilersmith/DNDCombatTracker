@@ -21,12 +21,10 @@ class PlayerSetUp extends Component {
 
 	componentDidMount(){
 		let {socket, history}=this.props;
+			socket.on('no user', function(){
+				history.push('/')
+			})	
 		socket.on('start', function(/*more than on parameter must be an obj*/){})	
-		socket.on('no user', function(){
-			console.log(history)
-			history.push('/')
-			
-		})	
 	}
 
 	handleSubmit = (e)=>{

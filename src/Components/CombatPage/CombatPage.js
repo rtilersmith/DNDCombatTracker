@@ -16,7 +16,6 @@ class CombatPage extends Component{
 	componentDidMount(){
 		let {socket, name, changeHealth, history } = this.props;
 		socket.on('no user', function(){
-			console.log(history)
 			history.push('/')
 			
 		})
