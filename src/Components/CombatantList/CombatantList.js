@@ -16,14 +16,6 @@ class CombatatantList extends Component{
 		}
 	}
 
-	componentDidMount(){
-		let name = this.props.combatant.name;
-		let { socket } = this.props
-		// socket.on('start', function(socket){
-		// })
-
-	}
-
 	addHealth = ()=>{
 		let { healthChange } = this.state
 		let { socket, name, updateHp, curHealth, combatant } = this.props;
