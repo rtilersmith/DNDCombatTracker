@@ -17,7 +17,12 @@ class GMSetUp extends Component{
 	}
 
 	componentDidMount=()=>{
-		let {getCombatants, socket, addCombatant, history} = this.props
+		let {getCombatants, socket, addCombatant, history } = this.props
+		socket.on('no user', function(){
+			console.log(history)
+			history.push('/')
+			
+		})
 		socket.emit('join')
 		let settingState=function(resp){
 			this.setState({
@@ -28,14 +33,15 @@ class GMSetUp extends Component{
 		let bound = settingState.bind(this)
 		socket.on('battle', bound)
 
-		socket.on('no user', function(){
-			console.log(history)
-			// history.push('/')
-			
-		})
+
 		socket.on('added', function(player){
 			addCombatant(player)
 		})
+
+		socket.on('playerHealth', function(player){
+		getCombatants(this.state.battleId)
+		})
+		
 	}
 	
 	render(){
@@ -43,16 +49,16 @@ class GMSetUp extends Component{
 		return(
 			<div>
 				<h2>Your battle ID is: {this.state.battleId}</h2>
-				<AddEnemies room={battleId}/>
+				<AddEnemies room={this.state.battleId}/>
 				<h3>Got a custom enemy?</h3>
-				<CustomEnemy room={battleId}/>
+				<CustomEnemy room={this.state.battleId}/>
 				<h2>Combatants</h2>
 				{combatants.length>0?
 				combatants.map((c, i)=>{
 					return(	
 					<div key={i}>
 						<CombatantList combatant={c} battleId={battleId}/>
-						<button onClick={()=>dropCombatant(c)}>Remove</button>
+						<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button>
 					</div>
 				)
 					})

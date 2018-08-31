@@ -62,12 +62,12 @@ export function selected(combatant){
 	}
 }
 
-export function dropCombatant(combatant){
+export function dropCombatant(combatant, battleId){
 	let { id } = combatant
 	
 	return {
 		type: DROP_COMBATANT,
-		payload: axios.delete(`/api/combatant/${id}`)
+		payload: axios.delete(`/api/combatant/${id}&${battleId}`)
 	}
 }
 

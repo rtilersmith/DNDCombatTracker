@@ -34,7 +34,7 @@ app.get('/api/combatants', CombatCtrl.read);
 app.post('/api/combatants', CombatCtrl.create);
 app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
-app.delete('/api/combatant/:id', CombatCtrl.delete);
+app.delete('/api/combatant/:id&:battleId', CombatCtrl.delete);
 app.post('/api/player', CombatCtrl.readPlayer)
 
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
@@ -60,7 +60,6 @@ io.on('connection', function(socket){
 	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
 	socket.on('playerJoin', function(room){
-		console.log(111111)
 		socket.handshake.session.battle=room.battle
 		socket.join(room.battle);
 		socket.on('playerHealth', function(player){
@@ -73,10 +72,9 @@ io.on('connection', function(socket){
 
 	socket.on('join', function(){
 		let battle;
-		// if(!socket.handshake.session.user){
-		// 	socket.emit('no user')
-		// } else {
-			// console.log('battle', socket.handshake.session.battle)
+		if(!socket.handshake.session.user){
+			socket.emit('no user')
+		} else {
 			if(!socket.handshake.session.battle){
 				battle = (Math.random().toString(36).substr(2,9).toUpperCase())
 				console.log('setting battle', battle)
@@ -85,8 +83,7 @@ io.on('connection', function(socket){
 			} else {
 				battle=socket.handshake.session.battle
 			}
-			// console.log(socket.handshake.session)
-		// }
+		}
 		socket.join(battle);
 		socket.emit('battle', {battle})
 		console.log(' user joined ',battle)

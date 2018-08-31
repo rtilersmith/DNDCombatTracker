@@ -1,11 +1,12 @@
 DELETE FROM Combatants
-WHERE Character_ID=$1;
+WHERE Character_ID=${id};
 
 DELETE FROM CombatantInfo
-WHERE ID=$1;
+WHERE ID=${id};
 
 
 SELECT * FROM CombatantInfo ci
 LEFT JOIN Combatants c
 ON ci.ID = c.Character_ID
+WHERE c.room = ${battleId}
 ORDER BY Current_init DESC

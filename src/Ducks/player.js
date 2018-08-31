@@ -51,7 +51,7 @@ export default function reducer(state = initialState, action){
 		case CHANGE_CURHEALTH:
 		return {...state, curHealth:action.payload};
 		case HEALTH_CHANGE_VAL:
-		return {...state, healthChange:action.payload}
+		return {...state, healthChangeVal:action.payload}
 		default:
 			return state;
 	}
@@ -128,6 +128,7 @@ export function setCha(cha) {
 }
 
 export function changeHealth(num){
+	console.log(num)
 	return {
 		type:CHANGE_CURHEALTH,
 		payload: +num

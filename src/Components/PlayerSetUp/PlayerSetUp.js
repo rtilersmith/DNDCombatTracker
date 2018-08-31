@@ -19,6 +19,16 @@ class PlayerSetUp extends Component {
 		}
 	}
 
+	componentDidMount(){
+		let {socket, history}=this.props;
+		socket.on('start', function(/*more than on parameter must be an obj*/){})	
+		socket.on('no user', function(){
+			console.log(history)
+			history.push('/')
+			
+		})	
+	}
+
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { socket, player, history } = this.props;
@@ -67,7 +77,7 @@ class PlayerSetUp extends Component {
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
 				let {ac, cha, con, hp, initiative, dex, str, wis, int} = resp.data
-				alert('player found', name)
+				alert('player found', resp.data.name)
 				setAc(ac);
 				setCha(cha);
 				setCon(con);

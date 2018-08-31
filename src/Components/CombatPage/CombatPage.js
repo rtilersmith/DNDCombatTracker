@@ -14,7 +14,12 @@ class CombatPage extends Component{
 	}
 
 	componentDidMount(){
-		let {socket, name, changeHealth } = this.props
+		let {socket, name, changeHealth, history } = this.props;
+		socket.on('no user', function(){
+			console.log(history)
+			history.push('/')
+			
+		})
 		socket.on('gmHealth', function(player){
 			if(name===player.name){
 				changeHealth( +player.change)
@@ -24,7 +29,10 @@ class CombatPage extends Component{
 
 	addHealth = ()=>{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
-		changeHealth( +curHealth + +healthChangeVal)
+		console.log('what up!', curHealth, healthChangeVal)
+		let num = Number(curHealth) + Number(healthChangeVal);
+		console.log(num, 111111)
+		changeHealth( num )
 		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}
@@ -32,7 +40,8 @@ class CombatPage extends Component{
 	subHealth = ()=>{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
 		let neg = -( +healthChangeVal)
-		changeHealth( +curHealth + neg)
+		let num = Number(curHealth) + neg;
+		changeHealth( num )
 		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}

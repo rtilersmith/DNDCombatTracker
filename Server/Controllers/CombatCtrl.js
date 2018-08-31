@@ -19,9 +19,7 @@ module.exports = {
 	read: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			console.log('1111',req.query)
 		let combatants = await db.getCombatants(req.query);
-		console.log('combatants', combatants)
 		res.send(combatants)
 		} catch (error) {
 			console.log('error getting combatants:', error)
@@ -52,10 +50,9 @@ module.exports = {
 	update: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let { id } = req.body;
-			console.log(req.body)
+			let combatant = await db.updateCombatant(req.params);
+			console.log(combatant)
 			res.send('good to go')
-			// let combatant = await db.updateCombatant(req.body);
 
 		} catch (error) {
 			console.log('failed to update combatant:', error)
@@ -65,8 +62,7 @@ module.exports = {
 	delete: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let { id } = req.params;
-			let dropped = await db.removeCombatant(id)
+			let dropped = await db.removeCombatant(req.params)
 			res.send(dropped)
 
 		} catch (error) {

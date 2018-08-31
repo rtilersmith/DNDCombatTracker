@@ -21,11 +21,7 @@ class CombatatantList extends Component{
 		let { socket } = this.props
 		// socket.on('start', function(socket){
 		// })
-		socket.on('playerHealth', function(player){
-				if( player.name === name ){
-					console.log(player.name)
-				}
-		})
+
 	}
 
 	addHealth = ()=>{
