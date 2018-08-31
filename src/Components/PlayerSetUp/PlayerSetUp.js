@@ -82,9 +82,6 @@ class PlayerSetUp extends Component {
 	}
 	
 	render(){
-		let { socket } = this.props
-
-		socket.on('start', function(/*more than on parameter must be an obj*/){})
 		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
 		return (
 			<div>

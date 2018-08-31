@@ -9,13 +9,29 @@ import { socketConnect } from 'socket.io-react'
 
 
 class GMSetUp extends Component{
+	constructor(){
+		super()
+		this.state={
+			battleId:''
+		}
+	}
 
 	componentDidMount=()=>{
-		let {getCombatants, socket, addCombatant, updateBattleId, battleId} = this.props
+		let {getCombatants, socket, addCombatant, history} = this.props
 		socket.emit('join')
-		socket.on('battle', function(resp){
-			updateBattleId(resp.battle)
-			getCombatants(battleId)
+		let settingState=function(resp){
+			this.setState({
+				battleId: resp.battle
+			})
+			getCombatants(this.state.battleId)
+		}
+		let bound = settingState.bind(this)
+		socket.on('battle', bound)
+
+		socket.on('no user', function(){
+			console.log(history)
+			// history.push('/')
+			
 		})
 		socket.on('added', function(player){
 			addCombatant(player)
@@ -26,7 +42,7 @@ class GMSetUp extends Component{
 		let {battleId, combatants, dropCombatant}=this.props
 		return(
 			<div>
-				<h2>Your battle ID is: {battleId}</h2>
+				<h2>Your battle ID is: {this.state.battleId}</h2>
 				<AddEnemies room={battleId}/>
 				<h3>Got a custom enemy?</h3>
 				<CustomEnemy room={battleId}/>

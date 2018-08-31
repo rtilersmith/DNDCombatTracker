@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { changeHealth, setHealthChangeVal } from '../../Ducks/player'
-import { socketConnect } from 'socket.io-react' 
+import { socketConnect } from 'socket.io-react'
 // import io from 'socket.io-client'
 
 
@@ -13,10 +13,19 @@ class CombatPage extends Component{
 		}
 	}
 
+	componentDidMount(){
+		let {socket, name, changeHealth } = this.props
+		socket.on('gmHealth', function(player){
+			if(name===player.name){
+				changeHealth( +player.change)
+			}
+		})
+	}
+
 	addHealth = ()=>{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
 		changeHealth( +curHealth + +healthChangeVal)
-		socket.emit('playerHealth', {name:name, change:healthChangeVal})
+		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}
 
@@ -24,14 +33,14 @@ class CombatPage extends Component{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
 		let neg = -( +healthChangeVal)
 		changeHealth( +curHealth + neg)
-		socket.emit('playerHealth', {name, change:neg})
+		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}
 
 	render(props){
 		// let { socket } = this.props
 		// socket.emit('join', function(/*more than on parameter must be an obj*/){})
-		let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, setHealthChangeVal, healthChangeVal}=this.props
+		let { name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, setHealthChangeVal }=this.props
 		return (
 			<div>
 

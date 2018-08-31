@@ -1,8 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { emailInput, passwordInput} from '../../Ducks/shared'
+import { socketConnect } from 'socket.io-react' 
+
 
 class Login extends Component{
+	componentDidMount(){
+		this.props.socket.on('start', function(/*more than on parameter must be an obj*/){})		
+	}
 
 	login=(props)=>{
 		let auth0domain = `https://${process.env.REACT_APP_AUTH0_DOMAIN}`
@@ -35,4 +40,4 @@ let mapStateToProps=(state)=>{
 		password: state.shared.password
 	}
 }
-export default connect(mapStateToProps, {emailInput, passwordInput})(Login)
+export default socketConnect(connect(mapStateToProps, {emailInput, passwordInput})(Login))

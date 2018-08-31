@@ -3,7 +3,7 @@ const axios = require('axios')
 module.exports = {
 	auth: async (req, res)=>{
 		try {
-			let auth0domain = `${process.env.SERVER_PROTOCOL}://${process.env.REACT_APP_AUTH0_DOMAIN}`
+			let auth0domain = `https://${process.env.REACT_APP_AUTH0_DOMAIN}`
 			let { code, role } = req.query
 			let payload = {
 				client_id: process.env.REACT_APP_AUTH0_CLIENT_ID,

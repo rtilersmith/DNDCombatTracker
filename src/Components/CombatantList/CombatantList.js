@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import onClickOutside from 'react-onclickoutside'
 import { updateInit, updateHp } from '../../Ducks/gm'
-import axios from 'axios'
 import { socketConnect } from 'socket.io-react' 
 // import io from 'socket.io-client'
 
@@ -20,9 +19,9 @@ class CombatatantList extends Component{
 	componentDidMount(){
 		let name = this.props.combatant.name;
 		let { socket } = this.props
-		socket.on('start', function(socket){
-		})
-		socket.on('battle', function(player){
+		// socket.on('start', function(socket){
+		// })
+		socket.on('playerHealth', function(player){
 				if( player.name === name ){
 					console.log(player.name)
 				}
@@ -31,19 +30,21 @@ class CombatatantList extends Component{
 
 	addHealth = ()=>{
 		let { healthChange } = this.state
-		let { socket, name, changeHealth, curHealth } = this.props;
-		changeHealth( +curHealth + +healthChange)
-		socket.emit('enemyHealth', {name:name, change:healthChange})
+		let { socket, name, updateHp, curHealth, combatant } = this.props;
+		let change = +curHealth + +healthChange
+		updateHp(combatant.id, {change} )
+		socket.emit('gmHealth', {name:name, change:healthChange})
 		this.setState({
-			healthChange:0
+			healthChange:5
 		})
 	}
 
 	subHealth = ()=>{
+		let { socket, name, updateHp, curHealth, combatant } = this.props;
 		let neg = -( +this.state.healthChange)
-		let { socket, name, changeHealth, curHealth } = this.props;
-		changeHealth( +curHealth + neg)
-		socket.emit('enemyHealth', {name, change:neg})
+		let change = +curHealth + neg
+		updateHp(combatant.id, {change} )
+		socket.emit('gmHealth', {name, change:neg})
 		this.setState({
 			healthChange:0
 		})
@@ -82,7 +83,7 @@ class CombatatantList extends Component{
 	}
 
 	render(){
-		let {combatant, battleId} = this.props;
+		let { combatant } = this.props;
 		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = combatant
 		return (
 			<div>
@@ -105,7 +106,7 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
-						<button onClick={(id)=>{axios.put(`/api/combatant/${id}`, {name, current_hp, battleId}).then(resp=>{console.log(resp)})}}>test</button>
+						<button onClick={this.addHealth}>test</button>
 						</p>
 
 					</div>
