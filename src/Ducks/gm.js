@@ -24,7 +24,7 @@ export default function reducer (state = initialState, action){
 	switch (action.type) {
 
 		case GET_ENEMIES+FULFILLED:
-		return { ...state, enemies:action.payload.data.results}
+		return { ...state, enemies:action.payload.data}
 
 		case SET_SELECTED:
 		return {...state, selected: [action.payload]}
@@ -88,7 +88,7 @@ export function getCombatants(room){
 export function getEnemies(){
 	return {
 		type: GET_ENEMIES,
-		payload: axios.get('http://www.dnd5eapi.co/api/monsters/')
+		payload: axios.get('/api/monsters'/* ---No longer usable due to not secure link---'http://www.dnd5eapi.co/api/monsters/'*/)
 	}
 }
 

@@ -33,8 +33,8 @@ class AddEnemies extends Component{
 		}))
 	}
 
-	addEnemy = (id) => {
-	axios.get(`http://www.dnd5eapi.co/api/monsters/${id}`).then((res)=>{
+	addMonster = (name) => {
+	axios.get(`/api/monsters/${name}`/* ---No longer usable due to not secure link---`http://www.dnd5eapi.co/api/monsters/${id}`*/).then((res)=>{
 			function mods(type){
 				return Math.floor((type-10)/2)
 			}
@@ -67,7 +67,6 @@ class AddEnemies extends Component{
 	}
 	
 	render(){
-
 		const list = this.props.enemies
 		const{listOpen, headerTitle} = this.state
 		return (
@@ -81,9 +80,9 @@ class AddEnemies extends Component{
         }
     </div>
      {listOpen && <ul className="dd-list" style={styles.list}>
-       {list.map((enemy, i) => (
+       {list.map((enemy) => (
 		 <li className="dd-list-item" key={enemy.name} style={styles.item}>
-		 <button onClick={()=>this.addEnemy(i+1)} style={styles.button}>
+		 <button onClick={()=>this.addMonster(enemy.name)} style={styles.button}>
 		 {enemy.name}
 		 </button>
 		 </li>

@@ -4,6 +4,7 @@ const express=require('express'),
 	  bodyPar=require('body-parser'),
 	  CombatCtrl=require('./Controllers/CombatCtrl'),
 	  AuthCtrl = require('./Controllers/AuthCtrl'),
+	  EnemyCtrl = require('./Controllers/EnemyCtrl'),
 	  path = require('path'),
 	  socket_io = require('socket.io'),
 	  sharedsession = require("express-socket.io-session");
@@ -34,6 +35,8 @@ app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
 app.delete('/api/combatant/:id&:battleId', CombatCtrl.delete);
 app.post('/api/player', CombatCtrl.readPlayer)
+app.get('/api/monsters', EnemyCtrl.read)
+app.get('/api/monsters/:name', EnemyCtrl.readOne)
 
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 
