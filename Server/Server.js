@@ -20,8 +20,6 @@ massive(process.env.CONNECTION_STRING).then(db=>{
 	console.log('db connect success!')
 	})
 
-
-
 app.use(bodyPar.json())
 
 app.use(session)

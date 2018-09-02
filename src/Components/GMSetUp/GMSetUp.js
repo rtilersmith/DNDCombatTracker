@@ -5,6 +5,7 @@ import CustomEnemy from '../CustomEnemy/CustomEnemy'
 import { connect } from 'react-redux'
 import { dropCombatant, getCombatants, addCombatant, updateBattleId } from '../../Ducks/gm'
 import { socketConnect } from 'socket.io-react' 
+import axios from 'axios'
 // import io from 'socket.io-client'
 
 
@@ -15,6 +16,7 @@ class GMSetUp extends Component{
 			battleId:''
 		}
 	}
+
 
 	componentDidMount=()=>{
 		let {getCombatants, socket, addCombatant, history } = this.props

@@ -32,3 +32,24 @@ CREATE TABLE users (
 	email VARCHAR,
 	picture TEXT
 )
+
+CREATE TABLE monsters (
+	id PRIMARY KEY,
+	name VARCHAR,
+	armor_class INTEGER,
+	constitution INTEGER,
+	constitution_save INTEGER,
+	dexterity INTEGER,
+	dexterity_save INTEGER,
+	intelligence INTEGER,
+	intelligence_save INTEGER,
+	strength_save INTEGER,
+	wisdom INTEGER,
+	wisdom_save INTEGER,
+	charisma INTEGER,
+	charisma_save INTEGER,
+	hit_points INTEGER
+)
+
+ALTER TABLE monsters
+ADD COLUMN strength
