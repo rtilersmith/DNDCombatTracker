@@ -148,13 +148,3 @@ class PlayerSetUp extends Component {
 let mapStateToProps = (state)=>{ return { player:state.player, login:state.shared.login } }
 
 export default socketConnect(connect(mapStateToProps,{ setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId })(PlayerSetUp))
-
-// let styles= {
-// 	name: {
-// 		width: '300px',
-// 		fontSize: '3em',
-// 		// margin:'0 auto',
-// 		// display:'flex',
-// 		// justifyContent:'center'
-// 	}
-// }

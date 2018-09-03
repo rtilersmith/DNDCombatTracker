@@ -10,7 +10,6 @@ const initialState = {
 
 const FULFILLED = '_FULFILLED'
 const SET_SELECTED = 'SET_SELECTED'
-const ADD_COMBATANT='ADD_COMBATANT'
 const DROP_COMBATANT='DROP_COMBATANT'
 const GET_COMBATANTS='GET_COMBATANTS'
 const GET_ENEMIES='GET_ENEMIES'
@@ -28,9 +27,6 @@ export default function reducer (state = initialState, action){
 
 		case SET_SELECTED:
 		return {...state, selected: [action.payload]}
-
-		case ADD_COMBATANT+FULFILLED:
-		return {...state, combatants: [...state.combatants, action.payload.data]}
 
 		case DROP_COMBATANT+FULFILLED:
 		return { ...state, combatants: action.payload.data}
@@ -71,10 +67,11 @@ export function dropCombatant(combatant, battleId){
 	}
 }
 
-export function addCombatant(obj){
+export let addEnemy= (enemy)=>{
+
 	return {
-		type: ADD_COMBATANT,
-		payload: axios.post('api/combatants', obj)
+		type: ADD_ENEMY,
+		payload: axios.post('api/combatants', enemy)
 	}
 }
 
@@ -89,14 +86,6 @@ export function getEnemies(){
 	return {
 		type: GET_ENEMIES,
 		payload: axios.get('/api/monsters'/* ---No longer usable due to not secure link---'http://www.dnd5eapi.co/api/monsters/'*/)
-	}
-}
-
-export let addEnemy= (enemy)=>{
-
-	return {
-		type: ADD_ENEMY,
-		payload: axios.post('api/combatants', enemy)
 	}
 }
 

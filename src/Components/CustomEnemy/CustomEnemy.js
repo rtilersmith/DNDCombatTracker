@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha, changeHealth } from '../../Ducks/enemy'
-import { addCombatant } from '../../Ducks/gm'
+import { addEnemy } from '../../Ducks/gm'
 
 
 class Customenemy extends Component {
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { name, health, ac} = this.props.enemy;
-		let { changeHealth, addCombatant, room } = this.props
+		let { changeHealth, addEnemy, room } = this.props
 		if (name && health && ac && room){
-			addCombatant({...this.props.enemy, room}); 
+			addEnemy({...this.props.enemy, room}); 
 			changeHealth(health)
 		} else {
 			alert("You must have name/type, health, and AC values for your enemy")
@@ -51,4 +51,4 @@ let mapStateToProps = (state)=>{
 	}
 }
 
-export default connect(mapStateToProps,{ handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha, changeHealth, addCombatant })(Customenemy)
+export default connect(mapStateToProps,{ handleName, handleHealth, handleAc, init, strength, dex, con, wis, intel, cha, changeHealth, addEnemy })(Customenemy)

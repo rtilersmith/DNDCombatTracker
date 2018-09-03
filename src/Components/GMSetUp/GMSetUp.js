@@ -4,7 +4,7 @@ import AddEnemies from '../AddEnemies/AddEnemies'
 import CustomEnemy from '../CustomEnemy/CustomEnemy'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { dropCombatant, getCombatants, addCombatant, updateBattleId } from '../../Ducks/gm'
+import { dropCombatant, getCombatants, addEnemy, updateBattleId } from '../../Ducks/gm'
 import { socketConnect } from 'socket.io-react' 
 // import io from 'socket.io-client'
 
@@ -19,7 +19,7 @@ class GMSetUp extends Component{
 
 
 	componentDidMount=()=>{
-		let {getCombatants, socket, addCombatant, history } = this.props
+		let {getCombatants, socket, addEnemy, history } = this.props
 		axios.get('/api/loginCheck').then(res=>{
 			if(!res.data){
 				history.push('/')
@@ -40,7 +40,7 @@ class GMSetUp extends Component{
 
 		socket.on('added', function(player){
 			console.log(player)
-			addCombatant(player)
+			addEnemy(player)
 		})
 
 		socket.on('playerHealth', function(battle){
@@ -89,4 +89,4 @@ function mapStateToProps(state){
 	}
 }
 
-export default socketConnect(connect(mapStateToProps, { dropCombatant, getCombatants, addCombatant, updateBattleId })(GMSetUp))
+export default socketConnect(connect(mapStateToProps, { dropCombatant, getCombatants, addEnemy, updateBattleId })(GMSetUp))
