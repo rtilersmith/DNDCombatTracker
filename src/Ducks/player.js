@@ -30,11 +30,10 @@ const HEALTH_CHANGE_VAL = 'HEALTH_CHANGE_VAL'
 const SET_BATTLE_ID = 'SET_BATTLE_ID'
 
 export default function reducer(state = initialState, action){
-	if(action.type===CHANGE_CURHEALTH + "_FULFILLED"){console.log(action.payload)}
 	switch (action.type) {
 		case SET_NAME:
 		return {...state, name:action.payload};
-		case SET_HEALTH:			
+		case SET_HEALTH:
 		return {...state, health:action.payload, curHealth:action.payload};
 		case SET_AC:
 		return {...state, ac:action.payload};

@@ -72,7 +72,7 @@ class PlayerSetUp extends Component {
 	returning=(e)=>{
 		e.preventDefault();
 		let room = this.state.battleId
-		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId, player } = this.props;
+		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId, player, socket } = this.props;
 		let {name}=player;
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
@@ -88,6 +88,7 @@ class PlayerSetUp extends Component {
 				setWis(wis);
 				setIntel(int);
 				setBattleId(room);
+				socket.emit('returnPlayer')
 			}).catch(error=>{alert('Could not get player', error)})
 		}
 	}

@@ -39,6 +39,7 @@ class GMSetUp extends Component{
 
 
 		socket.on('added', function(player){
+			console.log(player)
 			addCombatant(player)
 		})
 
@@ -47,6 +48,10 @@ class GMSetUp extends Component{
 		})
 		
 		socket.on('gmHealth', function(battle){
+			getCombatants(battle)
+		})
+
+		socket.on('returnPlayer', function(battle){
 			getCombatants(battle)
 		})
 	}

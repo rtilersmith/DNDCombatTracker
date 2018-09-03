@@ -37,9 +37,10 @@ class CombatPage extends Component{
 	addHealth = ()=>{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal, battleId } = this.props;
 		let num = Number(curHealth) + Number(healthChangeVal);
-		changeHealth( {name, num, battleId} )
+		changeHealth( {name, num, battleId} ).then(res=>{
 		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
+		})
 	}
 
 	subHealth = ()=>{

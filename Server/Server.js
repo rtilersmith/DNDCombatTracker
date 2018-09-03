@@ -61,9 +61,6 @@ io.use(sharedsession(session, {
 
 io.on('connection', function(socket){
 	socket.emit('start', /*emit params sent as obj*/)
-	if(!socket.handshake.session.user){
-		socket.emit('no user')
-	} else {
 		socket.on('playerJoin', function(room){
 			socket.handshake.session.battle=room.battle
 			socket.join(room.battle);
@@ -72,6 +69,10 @@ io.on('connection', function(socket){
 			})
 			socket.on('added', function(player){
 				io.to(room.battle).emit('added', player)
+			})
+
+			socket.on('returnPlayer', function(){
+				io.to(room.battle).emit('returnPlayer', room.battle)
 			})
 		})
 		socket.on('join', function(){
@@ -91,10 +92,10 @@ io.on('connection', function(socket){
 				io.to(battle).emit(`${player.name}`, player.change)
 				io.to(battle).emit('gmHealth', battle)
 			})
+
 		})
 		
 		socket.on('leave', function(room){
 			socket.leave(room.battle)
 		})
-	}
 })

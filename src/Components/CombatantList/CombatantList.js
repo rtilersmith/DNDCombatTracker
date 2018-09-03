@@ -23,8 +23,8 @@ class CombatatantList extends Component{
 		let change = +current_hp + +healthChange
 		updateHp(combatant.id, {change} ).then(res=>{
 			socket.emit('gmHealth', {name, change:healthChange})
+			this.setState({ healthChange:0 })
 		})
-		this.setState({ healthChange:0 })
 	}
 
 	subHealth = ()=>{
@@ -34,8 +34,8 @@ class CombatatantList extends Component{
 		let change = +current_hp + neg
 		updateHp(combatant.id, {change} ).then(res=>{
 			socket.emit('gmHealth', {name, change:neg})
+			this.setState({ healthChange:0 })
 		})
-		this.setState({ healthChange:0 })
 	}
 
 	handleClickOutside=event=>{ this.setState({ selected: false })

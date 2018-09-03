@@ -42,7 +42,7 @@ class AddEnemies extends Component{
 			
 			let ac=armor_class;
 			
-			let hp=hit_points;
+			let health=hit_points;
 			
 			let strength= strength_save? strength_save: mods(res.data.strength)
 			
@@ -60,7 +60,7 @@ class AddEnemies extends Component{
 			
 			let { room, addEnemy} = this.props
 			
-			let enemy= {name, ac, hp, strength, con, dex, wis, intel, cha, init, room};
+			let enemy= {name, ac, health, strength, con, dex, wis, intel, cha, init, room};
 			addEnemy(enemy)
 			alert(`${name} has been added`)
 		}).catch(error=>{alert('an error has occured:', error)})
