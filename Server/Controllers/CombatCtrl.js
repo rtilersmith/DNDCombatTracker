@@ -50,6 +50,9 @@ module.exports = {
 		try {
 			let db = req.app.get('db')
 			let player = await db.pcHealth(req.body)
+			let {current_hp}=player[0];
+			console.log(current_hp)
+			res.send(player[0])
 		} catch (error) {
 			console.log('error updating health', error)
 			res.status(500).send(error)

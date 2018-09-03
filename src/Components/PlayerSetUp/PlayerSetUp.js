@@ -113,7 +113,7 @@ class PlayerSetUp extends Component {
 								<input placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
 								<button>Confirm</button>
 							</form>
-							<Link to="/combat" player={player}>Submit</Link>
+							<Link to="/combat" player={this.state.player}>Submit</Link>
 						</div>
 						:
 						<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>

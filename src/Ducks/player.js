@@ -1,3 +1,4 @@
+import axios from 'axios'
 const initialState = {
 	name: '',
 	health: 0,
@@ -29,6 +30,7 @@ const HEALTH_CHANGE_VAL = 'HEALTH_CHANGE_VAL'
 const SET_BATTLE_ID = 'SET_BATTLE_ID'
 
 export default function reducer(state = initialState, action){
+	if(action.type===CHANGE_CURHEALTH + "_FULFILLED"){console.log(action.payload)}
 	switch (action.type) {
 		case SET_NAME:
 		return {...state, name:action.payload};
@@ -50,8 +52,8 @@ export default function reducer(state = initialState, action){
 		return {...state, intel:action.payload};
 		case SET_CHA:
 		return {...state, cha:action.payload};
-		case CHANGE_CURHEALTH:
-		return {...state, curHealth:action.payload};
+		case CHANGE_CURHEALTH+'_FULFILLED':
+		return {...state, curHealth:action.payload.data.current_hp};
 		case HEALTH_CHANGE_VAL:
 		return {...state, healthChangeVal:action.payload};
 		case SET_BATTLE_ID:
@@ -134,8 +136,7 @@ export function setCha(cha) {
 export function changeHealth(info){
 	return {
 		type:CHANGE_CURHEALTH,
-		payload: +info
-		//axios.post('/api/health', info)
+		payload: axios.post('/api/health', info)
 	}
 }
 
