@@ -6,12 +6,11 @@ import { socketConnect } from 'socket.io-react'
 
 class Login extends Component{
 	componentDidMount(){
-		let {socket, history}=this.props;
+		let {socket, history, role}=this.props;
 		socket.on('start', function(/*more than on parameter must be an obj*/){})	
-		socket.on('no user', function(){
+		if(!role){
 			history.push('/')
-			
-		})	
+		}
 	}
 
 	login=(props)=>{

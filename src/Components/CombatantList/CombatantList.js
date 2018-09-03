@@ -18,21 +18,23 @@ class CombatatantList extends Component{
 
 	addHealth = ()=>{
 		let { healthChange } = this.state
-		let { socket, updateHp, curHealth, combatant } = this.props;
-		let { name } = combatant
-		let change = +curHealth + +healthChange
-		updateHp(combatant.id, {change} )
-		socket.emit('gmHealth', { name, change:healthChange })
+		let { socket, updateHp, combatant } = this.props;
+		let { name, current_hp } = combatant
+		let change = +current_hp + +healthChange
+		updateHp(combatant.id, {change} ).then(res=>{
+			socket.emit('gmHealth', {name, change:healthChange})
+		})
 		this.setState({ healthChange:0 })
 	}
 
 	subHealth = ()=>{
-		let { socket, updateHp, curHealth, combatant } = this.props;
-		let { name } = combatant
+		let { socket, updateHp, combatant } = this.props;
+		let { name, current_hp } = combatant
 		let neg = -( +this.state.healthChange)
-		let change = +curHealth + neg
-		updateHp(combatant.id, {change} )
-		socket.emit('gmHealth', {name, change:neg})
+		let change = +current_hp + neg
+		updateHp(combatant.id, {change} ).then(res=>{
+			socket.emit('gmHealth', {name, change:neg})
+		})
 		this.setState({ healthChange:0 })
 	}
 
@@ -81,9 +83,10 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
-						<input onChange={(e)=>{
+						<input value={this.state.healthChange} onChange={(e)=>{this.stateHealth(e.target.value)
 						}}/>
-						<button onClick={this.addHealth}>test</button>
+						<button onClick={this.addHealth}>+</button>
+						<button onClick={this.subHealth}>-</button>
 						</p>
 
 					</div>

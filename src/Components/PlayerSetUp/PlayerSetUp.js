@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } from '../../Ducks/player'
+import { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId } from '../../Ducks/player'
 import { socketConnect } from 'socket.io-react' 
 
 
@@ -29,9 +29,10 @@ class PlayerSetUp extends Component {
 
 	handleSubmit = (e)=>{
 		e.preventDefault();
-		let { socket, player, history } = this.props;
+		let { socket, player, history, setBattleId } = this.props;
 		let { name, health, ac } = player;
 		let room = this.state.battleId
+		setBattleId(room)
 		if (name && health && ac && room){
 			socket.emit('added', {...player, room}) 
 			history.push('/combat')
@@ -71,7 +72,7 @@ class PlayerSetUp extends Component {
 	returning=(e)=>{
 		e.preventDefault();
 		let room = this.state.battleId
-		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, player } = this.props;
+		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId, player } = this.props;
 		let {name}=player;
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
@@ -86,12 +87,13 @@ class PlayerSetUp extends Component {
 				setStrength(str);
 				setWis(wis);
 				setIntel(int);
+				setBattleId(room);
 			}).catch(error=>{alert('Could not get player', error)})
 		}
 	}
 	
 	render(){
-		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
+		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, player } = this.props;
 		return (
 			<div>
 				{!this.state.connected?
@@ -111,7 +113,7 @@ class PlayerSetUp extends Component {
 								<input placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
 								<button>Confirm</button>
 							</form>
-							<Link to="/combat" player={this.state.player}>Submit</Link>
+							<Link to="/combat" player={player}>Submit</Link>
 						</div>
 						:
 						<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
@@ -144,7 +146,7 @@ class PlayerSetUp extends Component {
 
 let mapStateToProps = (state)=>{ return { player:state.player, login:state.shared.login } }
 
-export default socketConnect(connect(mapStateToProps,{ setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha })(PlayerSetUp))
+export default socketConnect(connect(mapStateToProps,{ setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, setBattleId })(PlayerSetUp))
 
 // let styles= {
 // 	name: {

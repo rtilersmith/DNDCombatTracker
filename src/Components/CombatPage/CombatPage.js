@@ -23,26 +23,30 @@ class CombatPage extends Component{
 			}
 		})
 
+		if(!name){
+			history.push('/playersetup')
+		}
+
 		socket.on(`${name}`, function(player){
 			console.log('player receiving change', player.change)
 				changeHealth( +player.change)
 		})
+
 	}
 
 	addHealth = ()=>{
-		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
+		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal, battleId } = this.props;
 		let num = Number(curHealth) + Number(healthChangeVal);
-		console.log(num, 111111)
-		changeHealth( num )
+		changeHealth( {name, num, battleId} )
 		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}
 
 	subHealth = ()=>{
-		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal } = this.props;
+		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal, battleId } = this.props;
 		let neg = -( +healthChangeVal)
 		let num = Number(curHealth) + neg;
-		changeHealth( num )
+		changeHealth( {name, num, battleId} )
 		socket.emit('playerHealth', {name, change:healthChangeVal})
 		setHealthChangeVal('')
 	}
@@ -75,9 +79,9 @@ class CombatPage extends Component{
 }
 
 let mapStateToProps=(state)=>{
-	let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, healthChangeVal}=state.player;
+	let {name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, healthChangeVal, battleId }=state.player;
 	return {
-		name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, healthChangeVal,login:state.shared.login
+		name, health, ac, init, strength, dex, con, wis, intel, cha, curHealth, healthChangeVal, battleId, login:state.shared.login
 	}
 }
 

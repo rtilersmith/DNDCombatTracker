@@ -37,7 +37,6 @@ module.exports = {
 		}
 	},
 	readPlayer: async (req, res)=>{
-		console.log(req.body)
 		try {
 			let db = req.app.get('db')
 			let player = await db.getPlayer(req.body)
@@ -47,10 +46,21 @@ module.exports = {
 			res.status(500).send(error)
 		}
 	},
+	playerHealth: async (req, res)=>{
+		try {
+			let db = req.app.get('db')
+			let player = await db.pcHealth(req.body)
+		} catch (error) {
+			console.log('error updating health', error)
+			res.status(500).send(error)
+		}
+	},
 	update: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let combatant = await db.updateCombatant(req.params);
+			console.log('body.change', req.body.change, 'params.id', req.params.id)
+			let info = {id:req.params.id, current_hp:req.body.change}
+			let combatant = await db.updateCombatant(info);
 			console.log(combatant)
 			res.send('good to go')
 

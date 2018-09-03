@@ -10,7 +10,8 @@ const initialState = {
 	intel: 0,
 	cha: 0,
 	curHealth: 0,
-	healthChangeVal:''
+	healthChangeVal:'',
+	battleId:''
 }
 
 const SET_NAME = 'SET_NAME'
@@ -25,6 +26,7 @@ const SET_INTEL = 'SET_INTEL'
 const SET_CHA = 'SET_CHA'
 const CHANGE_CURHEALTH = 'CHANGE_CURHEALTH'
 const HEALTH_CHANGE_VAL = 'HEALTH_CHANGE_VAL'
+const SET_BATTLE_ID = 'SET_BATTLE_ID'
 
 export default function reducer(state = initialState, action){
 	switch (action.type) {
@@ -51,7 +53,9 @@ export default function reducer(state = initialState, action){
 		case CHANGE_CURHEALTH:
 		return {...state, curHealth:action.payload};
 		case HEALTH_CHANGE_VAL:
-		return {...state, healthChangeVal:action.payload}
+		return {...state, healthChangeVal:action.payload};
+		case SET_BATTLE_ID:
+		return {...state, battleId:action.payload}
 		default:
 			return state;
 	}
@@ -127,10 +131,11 @@ export function setCha(cha) {
 	}
 }
 
-export function changeHealth(num){
+export function changeHealth(info){
 	return {
 		type:CHANGE_CURHEALTH,
-		payload: +num
+		payload: +info
+		//axios.post('/api/health', info)
 	}
 }
 
@@ -138,5 +143,12 @@ export function setHealthChangeVal(num){
 	return {
 		type:HEALTH_CHANGE_VAL,
 		payload: +num
+	}
+}
+
+export function setBattleId(val){
+	return {
+		type: SET_BATTLE_ID,
+		payload: val
 	}
 }

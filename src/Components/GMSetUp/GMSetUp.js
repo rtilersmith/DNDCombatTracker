@@ -20,7 +20,6 @@ class GMSetUp extends Component{
 
 	componentDidMount=()=>{
 		let {getCombatants, socket, addCombatant, history } = this.props
-
 		axios.get('/api/loginCheck').then(res=>{
 			if(!res.data){
 				history.push('/')
@@ -43,10 +42,13 @@ class GMSetUp extends Component{
 			addCombatant(player)
 		})
 
-		socket.on('playerHealth', function(player){
-		getCombatants(this.state.battleId)
+		socket.on('playerHealth', function(battle){
+		getCombatants(battle)
 		})
 		
+		socket.on('gmHealth', function(battle){
+			getCombatants(battle)
+		})
 	}
 	
 	render(){

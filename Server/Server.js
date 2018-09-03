@@ -35,6 +35,7 @@ app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
 app.delete('/api/combatant/:id&:battleId', CombatCtrl.delete);
 app.post('/api/player', CombatCtrl.readPlayer)
+app.post('/api/health', CombatCtrl.playerHealth)
 app.get('/api/monsters', EnemyCtrl.read)
 app.get('/api/monsters/:name', EnemyCtrl.readOne)
 
@@ -60,7 +61,6 @@ io.use(sharedsession(session, {
 
 io.on('connection', function(socket){
 	socket.emit('start', /*emit params sent as obj*/)
-	console.log('user connected')
 	if(!socket.handshake.session.user){
 		socket.emit('no user')
 	} else {
@@ -68,7 +68,7 @@ io.on('connection', function(socket){
 			socket.handshake.session.battle=room.battle
 			socket.join(room.battle);
 			socket.on('playerHealth', function(player){
-				io.to(room.battle).emit('playerHealth', player)
+				io.to(room.battle).emit('playerHealth', room.battle)
 			})
 			socket.on('added', function(player){
 				io.to(room.battle).emit('added', player)
@@ -79,7 +79,6 @@ io.on('connection', function(socket){
 			
 			if(!socket.handshake.session.battle){
 				battle = (Math.random().toString(36).substr(2,9).toUpperCase())
-				console.log('setting battle', battle)
 				socket.handshake.session.battle=battle;
 				socket.handshake.session.save();
 			} else {
@@ -87,16 +86,15 @@ io.on('connection', function(socket){
 			}
 			socket.join(battle);
 			socket.emit('battle', {battle})
-			console.log(' user joined ',battle)
 			
 			socket.on('gmHealth', function(player){
 				io.to(battle).emit(`${player.name}`, player.change)
+				io.to(battle).emit('gmHealth', battle)
 			})
 		})
 		
 		socket.on('leave', function(room){
 			socket.leave(room.battle)
-			console.log('user has left room ', room.battle)
 		})
 	}
 })
