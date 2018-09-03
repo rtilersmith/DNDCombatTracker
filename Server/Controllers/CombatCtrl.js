@@ -51,7 +51,6 @@ module.exports = {
 			let db = req.app.get('db')
 			let player = await db.pcHealth(req.body)
 			let {current_hp}=player[0];
-			console.log(current_hp)
 			res.send(player[0])
 		} catch (error) {
 			console.log('error updating health', error)
@@ -64,7 +63,6 @@ module.exports = {
 			console.log('body.change', req.body.change, 'params.id', req.params.id)
 			let info = {id:req.params.id, current_hp:req.body.change}
 			let combatant = await db.updateCombatant(info);
-			console.log(combatant)
 			res.send('good to go')
 
 		} catch (error) {

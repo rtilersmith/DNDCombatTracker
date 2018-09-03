@@ -28,7 +28,6 @@ class CombatPage extends Component{
 		}
 
 		socket.on(`${name}`, function(player){
-			console.log('player receiving change', player.change)
 				changeHealth( +player.change)
 		})
 

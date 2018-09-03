@@ -12,9 +12,7 @@ dbBuilder=()=>{
 			monster.wisdom_save= monster.wisdom_save || Math.floor((monster.wisdom-10)/2)
 			monster.intelligence_save= monster.intelligence_save || Math.floor((monster.intelligence-10)/2)
 			monster.charisma_save= monster.charisma_save || Math.floor((monster.charisma-10)/2)
-			console.log(monster)
 		axios.post('/api/monsters', monster).then(resp=>{
-			console.log(resp.data)
 		})
 		})
 	}

@@ -39,7 +39,6 @@ class GMSetUp extends Component{
 
 
 		socket.on('added', function(player){
-			console.log(player)
 			addEnemy(player)
 		})
 
