@@ -20,17 +20,17 @@ class PlayerSetUp extends Component {
 	}
 
 	componentDidMount(){
-		let {socket, history}=this.props;
-			socket.on('no user', function(){
-				history.push('/')
-			})	
-		socket.on('start', function(/*more than on parameter must be an obj*/){})	
+		axios.get('/api/loginCheck').then(res=>{
+			if(!res.data){
+				this.props.history.push('/')
+			}
+		})
 	}
 
 	handleSubmit = (e)=>{
 		e.preventDefault();
 		let { socket, player, history } = this.props;
-		let { name, health, ac/*, room*/ } = player;
+		let { name, health, ac } = player;
 		let room = this.state.battleId
 		if (name && health && ac && room){
 			socket.emit('added', {...player, room}) 
@@ -67,11 +67,12 @@ class PlayerSetUp extends Component {
 		})
 	}
 
+
 	returning=(e)=>{
 		e.preventDefault();
-		let {name}=this.props.player;
 		let room = this.state.battleId
-		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
+		let { setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, player } = this.props;
+		let {name}=player;
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
 				let {ac, cha, con, hp, initiative, dex, str, wis, int} = resp.data
@@ -141,11 +142,7 @@ class PlayerSetUp extends Component {
 	}
 }
 
-let mapStateToProps = (state)=>{
-	let player = state.player
-	return{player
-	}
-}
+let mapStateToProps = (state)=>{ return { player:state.player, login:state.shared.login } }
 
 export default socketConnect(connect(mapStateToProps,{ setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha })(PlayerSetUp))
 

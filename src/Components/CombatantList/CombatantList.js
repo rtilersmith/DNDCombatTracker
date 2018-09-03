@@ -18,57 +18,44 @@ class CombatatantList extends Component{
 
 	addHealth = ()=>{
 		let { healthChange } = this.state
-		let { socket, name, updateHp, curHealth, combatant } = this.props;
+		let { socket, updateHp, curHealth, combatant } = this.props;
+		let { name } = combatant
 		let change = +curHealth + +healthChange
 		updateHp(combatant.id, {change} )
-		socket.emit('gmHealth', {name:name, change:healthChange})
-		this.setState({
-			healthChange:5
-		})
+		socket.emit('gmHealth', { name, change:healthChange })
+		this.setState({ healthChange:0 })
 	}
 
 	subHealth = ()=>{
-		let { socket, name, updateHp, curHealth, combatant } = this.props;
+		let { socket, updateHp, curHealth, combatant } = this.props;
+		let { name } = combatant
 		let neg = -( +this.state.healthChange)
 		let change = +curHealth + neg
 		updateHp(combatant.id, {change} )
 		socket.emit('gmHealth', {name, change:neg})
-		this.setState({
-			healthChange:0
-		})
+		this.setState({ healthChange:0 })
 	}
 
-	handleClickOutside=event=>{
-		this.setState({
-		  selected: false
-		})
-	  }
+	handleClickOutside=event=>{ this.setState({ selected: false })
+	}
 
 	changeInit=()=>{
 		let { inputInit, initiative } = this.state;
 		let num = inputInit!==0?inputInit + initiative: initiative
-		this.props.updateInit(this.props.combatant.id,{"current_init":num})
-		
+		this.props.updateInit(this.props.combatant.id,{"current_init":num})	
 	}
 
-	setInit=(n)=>{
-		this.setState({
-			inputInit: n
-		})
+	setInit=(n)=>{ this.setState({ inputInit: n })
 	}
 
-	resetInit=()=>{
-		this.setState({
-			initiative:this.props.combatant.initiative
-		})
-		this.changeInit()
+	resetInit=()=>{ this.setState({ initiative:this.props.combatant.initiative })
+		this.changeInit() 
 	}
 
-	toggle=()=>{
-		this.setState({
-			selected: !this.state.selected
-		})
+	toggle=()=>{ this.setState({ selected: !this.state.selected })
 	}
+
+	stateHealth=(num)=>{this.setState({healthChange:num})}
 
 	render(){
 		let { combatant } = this.props;
@@ -94,6 +81,8 @@ class CombatatantList extends Component{
 						<b>Health:</b>
 						<b>Max</b>{hp}
 						<b>Current</b>{current_hp}
+						<input onChange={(e)=>{
+						}}/>
 						<button onClick={this.addHealth}>test</button>
 						</p>
 

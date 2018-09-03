@@ -38,6 +38,7 @@ app.post('/api/player', CombatCtrl.readPlayer)
 app.get('/api/monsters', EnemyCtrl.read)
 app.get('/api/monsters/:name', EnemyCtrl.readOne)
 
+app.get('/api/loginCheck', AuthCtrl.checkLogin)
 //http://dnd5eapi.co/api/monsters/ **Location for external API** Case sensitive, only monster manual creatures included.
 
 
@@ -58,8 +59,8 @@ io.use(sharedsession(session, {
 }));
 
 io.on('connection', function(socket){
-	console.log('user connected')
 	socket.emit('start', /*emit params sent as obj*/)
+	console.log('user connected')
 	if(!socket.handshake.session.user){
 		socket.emit('no user')
 	} else {
@@ -89,7 +90,7 @@ io.on('connection', function(socket){
 			console.log(' user joined ',battle)
 			
 			socket.on('gmHealth', function(player){
-				io.to(battle).emit('gmHealth', player)
+				io.to(battle).emit(`${player.name}`, player.change)
 			})
 		})
 		

@@ -128,7 +128,6 @@ export function setCha(cha) {
 }
 
 export function changeHealth(num){
-	console.log(num)
 	return {
 		type:CHANGE_CURHEALTH,
 		payload: +num

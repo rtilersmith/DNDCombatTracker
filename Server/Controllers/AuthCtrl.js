@@ -25,10 +25,12 @@ module.exports = {
 
 			if (users.length){
 				req.session.user = users[0]
+				req.session.loggedIn = true;
 				res.redirect(`/${role}setup`)
 			} else {
 				let users = db.createUser(userInfo)
 				req.session.user = users[0]
+				req.session.loggedIn = true;
 				res.redirect(`/${role}setup`)
 			}
 
@@ -37,5 +39,13 @@ module.exports = {
 			res.redirect('/error')
 		}
 
+	},
+	checkLogin: (req, res) => {
+		if(req.session.loggedIn) {
+			res.send(true)
+		}
+		else {
+			res.send(false)
+		}
 	}
 }
