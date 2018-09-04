@@ -49,9 +49,11 @@ class GMSetUp extends Component{
 		let {battleId, combatants, dropCombatant}=this.props
 		return(
 			<div>
-				<h2>Your battle ID is: {this.state.battleId}</h2>
+				<h3>Your battle ID is: {this.state.battleId}</h3>
+				<div className="selectEnemy">
 				<AddEnemies room={this.state.battleId}/>
-				<h3>Got a custom enemy?</h3>
+				</div>
+				<h2>Got a custom enemy?</h2>
 				<CustomEnemy room={this.state.battleId}/>
 				<h2>Combatants</h2>
 				{combatants.length>0?

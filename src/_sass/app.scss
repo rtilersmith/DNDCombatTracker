@@ -69,7 +69,6 @@ p {
 
 .link {
     @include button;
-    font-size:.85em;
     display: inline-block;
 }
 
@@ -97,4 +96,4 @@ input {
 @import 'landing.scss';
 @import '_playerSetup.scss';
 @import '_combatPage.scss';
-  
+@import '_gmSetup.scss'

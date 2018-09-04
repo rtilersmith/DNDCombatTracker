@@ -37,7 +37,8 @@ class Customenemy extends Component {
 					<input placeholder="Wisdom" type='number' onChange={(e)=>wis(e.target.value)}/>	
 					<input placeholder="Intelligence" type='number' onChange={(e)=>intel(e.target.value)}/>	
 					<input placeholder="Charisma" type='number' onChange={(e)=>cha(e.target.value)}/>	
-					<input type='submit' value="Add"/>
+					<br/>
+					<button className="enemySubmit" type='submit' value="Add">Submit</button>
 				</form>
 			</div>
 		)
