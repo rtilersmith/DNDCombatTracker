@@ -99,43 +99,56 @@ class PlayerSetUp extends Component {
 			<div>
 				{!this.state.connected?
 					<div>
-						Connect your battleId first<input value={this.state.battleId} onChange={this.handleId}/>
+						<h3>Connect to your party's Battle Id. </h3>
+						<input value={this.state.battleId} placeholder="Battle ID" class="battleID" onChange={this.handleId}/>
 						<button onClick={()=>{this.socket();this.connect()}}>Connect</button>
 					</div>
 				:
 					
 					<div>
-						<div>
-							Returning Player? <input type='checkbox' onClick={()=>{this.setState({checked:!this.state.checked})}}/>
+						<div class="returningPlayer" >
+							<h3>Returning Player?</h3> <input class="checkbox" type='checkbox' onClick={()=>{this.setState({checked:!this.state.checked})}}/>
 						</div>
 						{this.state.checked?
 						<div>
 							<form onSubmit={this.returning} name='returnForm'>
-								<input placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
+								<input class="returnFrom" placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
 								<button>Confirm</button>
 							</form>
-							<Link to="/combat" player={this.state.player}>Submit</Link>
+							<Link className='link' to="/combat" player={this.state.player}>Submit</Link>
 						</div>
 						:
 						<form onSubmit={this.handleSubmit} name='playerForm' className='playerForm'>
+							<div className="formSection">
 							<input placeholder="Player Name" type='text'
 							onChange={(e)=>setName(e.target.value)}
 							/>
-							<br/>	
+							</div>
+
+							<div className="formSection">	
 							<input placeholder="Health" type='number' onChange={(e)=>{setHealth(e.target.value)}}/>	
 							<input placeholder="Armor Class" type='number' onChange={(e)=>setAc(e.target.value)}/>
 							<input placeholder="Initiative Bonus" type='number' onChange={(e)=>setInit(e.target.value)}/>	
-							<br/>	
+							</div>
 							<p>Saving Throw Modifiers:</p>
+							<div className="playerSaving">		
+							<div className='savingSection'>		
 							<input placeholder="Strength" type='number' onChange={(e)=>setStrength(e.target.value)}/>	
 							<input placeholder="Dexterity" type='number' onChange={(e)=>setDex(e.target.value)}/>
-							<br/>	
-							<input placeholder="Constitution" type='number' onChange={(e)=>setCon(e.target.value)}/>	
+							</div>
+							<div className="savingSection">
+							<input placeholder="Constitution" type='number' onChange={(e)=>setCon(e.target.value)}/>
 							<input placeholder="Wisdom" type='number' onChange={(e)=>setWis(e.target.value)}/>	
-							<br/>
+							</div>
+							<div className="savingSection">
 							<input placeholder="Intelligence" type='number' onChange={(e)=>setIntel(e.target.value)}/>	
 							<input placeholder="Charisma" type='number' onChange={(e)=>setCha(e.target.value)}/>	
-							<input type='submit' value="Ready?"/>
+							</div>
+							</div>
+
+							<div className="formSection">
+							<button type='submit' className="readyButton" value="Ready?"> Submit </button>
+							</div>
 						</form>
 					}
 					</div>

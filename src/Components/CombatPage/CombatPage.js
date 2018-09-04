@@ -58,7 +58,7 @@ class CombatPage extends Component{
 		return (
 			<div>
 
-				Name:{name}<br/>
+				Name:{name} <br/>
 				Max Health:{health}<br/>
 				Current Health:{curHealth}<br/>
 				

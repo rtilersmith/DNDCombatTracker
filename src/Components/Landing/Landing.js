@@ -8,13 +8,14 @@ class Landing extends Component{
 	
 	render(){
 		return(
-			<div className="landingContainer">
-			<h2>Let the combat begin</h2>
+		<div className="landingContainer">
+			<h2>Let the combat begin.</h2>
+			<div class= "roleBtns">
+				<Link to='/login' onClick={()=>this.props.setRole('player')}className='link'>Player</Link>
+				<Link to='/login'  onClick={()=>this.props.setRole('gm')}className='link'>Game Master</Link>
+			</div>
 			<h3>What is your role?</h3>
-			<Link to='/login' onClick={()=>this.props.setRole('player')}className='link'>Player</Link>
-			<Link to='/login'  onClick={()=>this.props.setRole('gm')}className='link'>Game Master</Link>
-			<h4>You will be redirected to login/register</h4>
-			
+			<h4>You will be redirected to login/register.</h4>
 		</div>
 	)
 	}

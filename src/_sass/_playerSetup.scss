@@ -1,0 +1,63 @@
+@include placeholders;
+
+.battleID {
+    width: 15em;
+    height: 3em;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    border:none;
+    text-align: center;
+    display: block;
+
+}
+button {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+input {
+    height: 2em;
+    margin: 0 .25em 1em;
+}
+
+.returningPlayer {
+    height:1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1em;
+    h3 {
+        margin: 0;
+        padding: 0 1em;
+        margin:0;        
+    }
+    .checkbox {
+        min-height: 40px;
+        margin: 0;
+    }
+}
+.playerFrom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.playerSaving {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.savingSection {
+    display: flex;
+    flex-direction: column;
+}
+
+.readyButton{
+    margin: 0;
+    padding:0;
+    @include button;
+}
+.readyButton:hover {
+    @include buttonHover;
+}

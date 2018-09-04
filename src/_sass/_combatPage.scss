@@ -1,0 +1,17 @@
+@import 'bourbon';
+@import 'vars.scss';
+@import 'mixins.scss';
+
+.plusMinus {
+    padding: 1em 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonPlusMinus {
+    min-width: 2em;
+    margin-left: 5px;
+    padding: 0;
+    height: 2em;
+}
