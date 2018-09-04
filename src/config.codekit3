@@ -22,6 +22,19 @@
 		"oS": 0,
 		"uL": 1
 		},
+	"\/_sass\/_gmSetup.scss": {
+		"aP": 0,
+		"bl": 0,
+		"dP": 10,
+		"dS": 0,
+		"ft": 4,
+		"ma": 0,
+		"oA": 1,
+		"oAP": "\/_sass\/_gmSetup.css",
+		"oF": 0,
+		"oS": 0,
+		"uL": 1
+		},
 	"\/_sass\/_landing.scss": {
 		"aP": 0,
 		"bl": 0,

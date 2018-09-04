@@ -22,7 +22,6 @@ html {
     
 }
 body {
-    
     background: $background;
     padding: 10vh 10vw;
     min-height: 100vh;
@@ -69,7 +68,6 @@ p {
 
 .link {
     @include button;
-    font-size:.85em;
     display: inline-block;
 }
 
@@ -97,4 +95,4 @@ input {
 @import 'landing.scss';
 @import '_playerSetup.scss';
 @import '_combatPage.scss';
-  
+@import '_gmSetup.scss'

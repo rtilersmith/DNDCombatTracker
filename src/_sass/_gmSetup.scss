@@ -1,0 +1,19 @@
+.enemyDropdown {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.selectEnemy {
+    margin: 0 auto 2rem;
+    border: 2px solid white;
+    padding: .75rem;
+    max-width: 60vw;
+}
+
+.dd-header-title {
+    margin: 0 2rem;
+}
+
+.enemySubmit {
+    margin-bottom:2rem;
+}

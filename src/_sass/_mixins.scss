@@ -5,16 +5,17 @@
 
 @mixin button{
     min-width: 10rem;
-    margin: 0 .75em;
-    padding: .75em 0;
+    margin: 0 .75rem;
+    padding: .75rem 0;
     text-decoration: none;
     background-color:white;
     color: black;
     text-align: center;
     text-transform: uppercase;    
     border-radius: 2px;
-    margin-bottom: 1em;
-    border: none;              
+    margin-bottom: 1rem;
+    border: none;
+    font-size: .75rem;              
 }
 
 @mixin buttonHover{
