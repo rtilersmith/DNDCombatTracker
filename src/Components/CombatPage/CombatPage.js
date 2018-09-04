@@ -60,6 +60,14 @@ class CombatPage extends Component{
 
 				Name:{name}<br/>
 				Max Health:{health}<br/>
+				Current Health:{curHealth}<br/>
+				
+				<div className="plusMinus">
+				<input type='number' onChange={(e)=>{setHealthChangeVal(e.target.value)}}/>
+					<button className="buttonPlusMinus" onClick={this.addHealth}>+</button>
+					<button className="buttonPlusMinus" onClick={this.subHealth}>-</button>
+				</div>
+=======
 				Current Health:{curHealth}<input type='number' value={healthChangeVal} onChange={(e)=>{setHealthChangeVal(e.target.value)}}/>
 				<button onClick={this.addHealth}>+</button>
 				<button onClick={this.subHealth}>-</button>
