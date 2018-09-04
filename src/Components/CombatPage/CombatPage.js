@@ -38,7 +38,7 @@ class CombatPage extends Component{
 		let num = Number(curHealth) + Number(healthChangeVal);
 		changeHealth( {name, num, battleId} ).then(res=>{
 		socket.emit('playerHealth', {name, change:healthChangeVal})
-		setHealthChangeVal('')
+		setHealthChangeVal(0)
 		})
 	}
 
@@ -46,9 +46,10 @@ class CombatPage extends Component{
 		let { socket, name, changeHealth, curHealth, setHealthChangeVal, healthChangeVal, battleId } = this.props;
 		let neg = -( +healthChangeVal)
 		let num = Number(curHealth) + neg;
-		changeHealth( {name, num, battleId} )
-		socket.emit('playerHealth', {name, change:healthChangeVal})
-		setHealthChangeVal('')
+		changeHealth( {name, num, battleId} ).then(res=>{
+			socket.emit('playerHealth', {name, change:healthChangeVal})
+			setHealthChangeVal(0)
+		})
 	}
 
 	render(props){
@@ -63,8 +64,8 @@ class CombatPage extends Component{
 				Current Health: {curHealth}<br/>
 				<div className="plusMinus">
 				<input className="currentHealth"type='number' onChange={(e)=>{setHealthChangeVal(e.target.value)}}/>
-					<button className="buttonPlusMinus" onClick={this.addHealth}>+</button>
-					<button className="buttonPlusMinus" onClick={this.subHealth}>-</button>
+					<button value={healthChangeVal} className="buttonPlusMinus" onClick={this.addHealth}>+</button>
+					<button value={healthChangeVal} className="buttonPlusMinus" onClick={this.subHealth}>-</button>
 				</div>
 				<br/>
 

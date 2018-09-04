@@ -94,10 +94,10 @@ class PlayerSetUp extends Component {
 	}
 	
 	render(){
-		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha, player } = this.props;
+		let { setName, setHealth, setAc, setInit, setStrength, setDex, setCon, setWis, setIntel, setCha } = this.props;
 		return (
 			<div>
-				{!this.state.connected?
+				{!this.state.connected ?
 					<div>
 						<h3>Connect to your party's Battle Id. </h3>
 						<input value={this.state.battleId} placeholder="Battle ID" className="battleID" onChange={this.handleId}/>

@@ -35,7 +35,7 @@ app.get('/api/combatant/:id', CombatCtrl.readOne)
 app.put('/api/combatant/:id', CombatCtrl.update);
 app.delete('/api/combatant/:id&:battleId', CombatCtrl.delete);
 app.post('/api/player', CombatCtrl.readPlayer)
-app.post('/api/health', CombatCtrl.playerHealth)
+app.put('/api/player', CombatCtrl.playerHealth)
 app.get('/api/monsters', EnemyCtrl.read)
 app.get('/api/monsters/:name', EnemyCtrl.readOne)
 

@@ -135,7 +135,7 @@ export function setCha(cha) {
 export function changeHealth(info){
 	return {
 		type:CHANGE_CURHEALTH,
-		payload: axios.post('/api/health', info)
+		payload: axios.put('/api/player', info)
 	}
 }
 
