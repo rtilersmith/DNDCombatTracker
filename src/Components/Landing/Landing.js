@@ -10,7 +10,7 @@ class Landing extends Component{
 		return(
 		<div className="landingContainer">
 			<h2>Let the combat begin.</h2>
-			<div class= "roleBtns">
+			<div className= "roleBtns">
 				<Link to='/login' onClick={()=>this.props.setRole('player')}className='link'>Player</Link>
 				<Link to='/login'  onClick={()=>this.props.setRole('gm')}className='link'>Game Master</Link>
 			</div>

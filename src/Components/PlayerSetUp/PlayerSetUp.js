@@ -100,19 +100,19 @@ class PlayerSetUp extends Component {
 				{!this.state.connected?
 					<div>
 						<h3>Connect to your party's Battle Id. </h3>
-						<input value={this.state.battleId} placeholder="Battle ID" class="battleID" onChange={this.handleId}/>
+						<input value={this.state.battleId} placeholder="Battle ID" className="battleID" onChange={this.handleId}/>
 						<button onClick={()=>{this.socket();this.connect()}}>Connect</button>
 					</div>
 				:
 					
 					<div>
-						<div class="returningPlayer" >
-							<h3>Returning Player?</h3> <input class="checkbox" type='checkbox' onClick={()=>{this.setState({checked:!this.state.checked})}}/>
+						<div className="returningPlayer" >
+							<h3>Returning Player?</h3> <input className="checkbox" type='checkbox' onClick={()=>{this.setState({checked:!this.state.checked})}}/>
 						</div>
 						{this.state.checked?
 						<div>
 							<form onSubmit={this.returning} name='returnForm'>
-								<input class="returnFrom" placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
+								<input className="returnFrom" placeholder="Player Name" type='text' onChange={(e)=>setName(e.target.value)}/>
 								<button>Confirm</button>
 							</form>
 							<Link className='link' to="/combat" player={this.state.player}>Submit</Link>
