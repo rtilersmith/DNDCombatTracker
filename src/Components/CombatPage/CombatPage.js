@@ -68,7 +68,7 @@ class CombatPage extends Component{
 					<button className="buttonPlusMinus" onClick={this.subHealth}>-</button>
 				</div>
 				<br/>
-				
+
 				Armor Class:{ac}<br/>
 				Initiative:{init}<br/>
 				Saving Throws:
