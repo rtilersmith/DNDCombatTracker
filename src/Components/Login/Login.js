@@ -28,9 +28,8 @@ class Login extends Component{
 	render(){
 		return(
 			<div>
-				<h2>Welcome</h2>
-				<h3>Please login with your Gmail or Facebook account</h3>
-				<h4>You will be directed to Auth0.com for this</h4>
+				<h2>Welcome.</h2>
+				<h3>Login with your Gmail or Github account.</h3>
 				{this.props.role==="gm"? <button to="gm" className='link' onClick={this.login}>Login/Register</button> : 
 				<button to="playersetup" className='link' onClick={this.login}>Login/Register</button> }
 			</div>

@@ -1,0 +1,53 @@
+@import 'bourbon';
+@import 'vars.scss';
+@import 'mixins.scss';
+
+body {
+ text-align: center;
+ background: $background;
+ color: white;
+ overflow:hidden;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
+
+.App{
+    display:flex;
+    flex-direction: column;
+}
+
+header {
+    flex: 1;
+    max-width: 80vw;
+    margin:0 auto;
+    display: flex;
+    .App-title {
+        margin: 0 0 1.5em;
+        font-family: $disFont;
+        color: $red;
+        max-width:65vw;
+        font-size: 2.5em;
+        letter-spacing: .05em;
+        /*@media (min-width: 768px){
+            font-size: 5em;
+            max-width:65vw;
+        }
+        @media (min-width: 1200px) {
+
+        }*/
+    }    
+}
+
+.landingContainer {
+
+}
+
+
+.roleBtns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    align-content: center;
+}    
