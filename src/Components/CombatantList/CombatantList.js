@@ -20,8 +20,8 @@ class CombatatantList extends Component{
 		let { healthChange } = this.state
 		let { socket, updateHp, combatant } = this.props;
 		let { name, current_hp } = combatant
-		let change = +current_hp + +healthChange
-		updateHp(combatant.id, {change} ).then(res=>{
+		let health = +current_hp + +healthChange
+		updateHp(combatant.id, {health} ).then(res=>{
 			socket.emit('gmHealth', {name, change:healthChange})
 			this.setState({ healthChange:0 })
 		})
@@ -31,8 +31,8 @@ class CombatatantList extends Component{
 		let { socket, updateHp, combatant } = this.props;
 		let { name, current_hp } = combatant
 		let neg = -( +this.state.healthChange)
-		let change = +current_hp + neg
-		updateHp(combatant.id, {change} ).then(res=>{
+		let health = +current_hp + neg
+		updateHp(combatant.id, {health} ).then(res=>{
 			socket.emit('gmHealth', {name, change:neg})
 			this.setState({ healthChange:0 })
 		})
@@ -43,14 +43,17 @@ class CombatatantList extends Component{
 
 	changeInit=()=>{
 		let { inputInit, initiative } = this.state;
-		let num = inputInit!==0?inputInit + initiative: initiative
-		this.props.updateInit(this.props.combatant.id,{"current_init":num})	
+		console.log(inputInit)
+		let num = +inputInit>0?Number(inputInit) + +initiative : +this.props.combatant.initiative;
+		console.log(num)
+		this.props.updateInit(this.props.combatant.id,{init:num})	
 	}
 
 	setInit=(n)=>{ this.setState({ inputInit: n })
 	}
 
 	resetInit=()=>{ this.setState({ initiative:this.props.combatant.initiative })
+	console.log(this.props.combatant.initiative, this.state.inputInit)
 		this.changeInit() 
 	}
 
@@ -66,7 +69,8 @@ class CombatatantList extends Component{
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
 				Initiative: {current_init> initiative? current_init: initiative}
-				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/><button onClick={this.changeInit}>Submit initiative roll</button>
+				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/>
+				<button onClick={this.changeInit}>Submit initiative roll</button>
 				</div>
 			{!this.state.selected?
 				<div>
