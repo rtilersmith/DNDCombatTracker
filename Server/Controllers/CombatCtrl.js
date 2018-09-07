@@ -59,16 +59,16 @@ module.exports = {
 	update: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			console.log('body', req.body, 'params.id', req.params.id)
 			if(req.body.health){
-				let info = {id:req.params.id, current_hp:req.body.health}
-				let combatant = await db.updateCombatant(info);
+				let info = {id:req.params.id, current_hp:req.body.health, room: req.body.room}
+				let combatants = await db.updateCombatant(info);
+				res.status(200).send(combatants)
 			}
 			else if(req.body.init){
-				let info ={id:req.params.id, current_init:req.body.init}
-				let combatant = await db.updateCombatantInit(info);
+				let info ={id:req.params.id, current_init:req.body.init, room: req.body.room}
+				let combatants = await db.updateCombatantInit(info);
+				res.status(200).send(combatants)
 			}
-			res.send('good to go')
 
 		} catch (error) {
 			console.log('failed to update combatant:', error)

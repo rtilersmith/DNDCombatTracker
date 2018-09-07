@@ -20,6 +20,8 @@ const UPDATE_BATTLE_ID='UPDATE_BATTLE_ID'
 
 
 export default function reducer (state = initialState, action){
+	if(action.type===UPDATE_INIT+FULFILLED){
+	}
 	switch (action.type) {
 
 		case GET_ENEMIES+FULFILLED:
@@ -38,10 +40,10 @@ export default function reducer (state = initialState, action){
 		return {...state, combatants: [...state.combatants, action.payload.data]}
 
 		case UPDATE_HP+FULFILLED:
-		return {...state, combatants: [...state.combatants, action.payload.data]}
+		return {...state, combatants: action.payload.data}
 
 		case UPDATE_INIT+FULFILLED:
-		return {...state, combatants: [...state.combatants, action.payload.data]}
+		return {...state, combatants: action.payload.data}
 
 		case UPDATE_BATTLE_ID:
 		return {...state, battleId:action.payload}

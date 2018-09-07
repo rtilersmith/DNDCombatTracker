@@ -70,8 +70,8 @@ class GMSetUp extends Component{
 				combatants.map((c, i)=>{
 					return(	
 					<div key={i}>
-						<CombatantList combatant={c} battleId={battleId}/>
-						<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button>
+						<CombatantList combatant={c} deleteButton={<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button> }/>
+						
 					</div>
 				)
 					})

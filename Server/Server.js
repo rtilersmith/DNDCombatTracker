@@ -92,7 +92,6 @@ io.on('connection', function(socket){
 				io.to(battle).emit(`${player.name}`, player.change)
 				io.to(battle).emit('gmHealth', battle)
 			})
-
 		})
 		
 		socket.on('leave', function(room){

@@ -19,9 +19,9 @@ class CombatatantList extends Component{
 	addHealth = ()=>{
 		let { healthChange } = this.state
 		let { socket, updateHp, combatant } = this.props;
-		let { name, current_hp } = combatant
+		let { name, current_hp, room } = combatant
 		let health = +current_hp + +healthChange
-		updateHp(combatant.id, {health} ).then(res=>{
+		updateHp(combatant.id, {health, room} ).then(res=>{
 			socket.emit('gmHealth', {name, change:healthChange})
 			this.setState({ healthChange:0 })
 		})
@@ -29,10 +29,10 @@ class CombatatantList extends Component{
 
 	subHealth = ()=>{
 		let { socket, updateHp, combatant } = this.props;
-		let { name, current_hp } = combatant
+		let { name, current_hp, room } = combatant
 		let neg = -( +this.state.healthChange)
 		let health = +current_hp + neg
-		updateHp(combatant.id, {health} ).then(res=>{
+		updateHp(combatant.id, {health, room} ).then(res=>{
 			socket.emit('gmHealth', {name, change:neg})
 			this.setState({ healthChange:0 })
 		})
@@ -42,18 +42,19 @@ class CombatatantList extends Component{
 	}
 
 	changeInit=()=>{
-		let { inputInit, initiative } = this.state;
-		console.log(inputInit)
-		let num = +inputInit>0?Number(inputInit) + +initiative : +this.props.combatant.initiative;
-		console.log(num)
-		this.props.updateInit(this.props.combatant.id,{init:num})	
+		let { inputInit } = this.state;
+		let { initiative, room } = this.props.combatant
+		let num = +inputInit > 0 ? Number(inputInit) + +initiative : +initiative;
+		this.props.updateInit(this.props.combatant.id,{init:num, room})
+		this.setState({
+			inputInit:''
+		})
 	}
 
 	setInit=(n)=>{ this.setState({ inputInit: n })
 	}
 
 	resetInit=()=>{ this.setState({ initiative:this.props.combatant.initiative })
-	console.log(this.props.combatant.initiative, this.state.inputInit)
 		this.changeInit() 
 	}
 
@@ -63,19 +64,25 @@ class CombatatantList extends Component{
 	stateHealth=(num)=>{this.setState({healthChange:num})}
 
 	render(){
-		let { combatant } = this.props;
+		let { combatant, deleteButton } = this.props;
 		let { name, initiative, ac, str, dex, con, wis, intel, cha, hp, current_hp, current_init} = combatant
 		return (
 			<div>
 				<div><button onClick={this.toggle} style={styles.button}><h3>{name}</h3></button>
-				Initiative: {current_init> initiative? current_init: initiative}
-				<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/>
-				<button onClick={this.changeInit}>Submit initiative roll</button>
+				Initiative: { current_init }
+				{current_init === initiative? 
+				<div>
+					<input type='number' value={this.state.inputInit} onChange={(e)=>this.setInit(e.target.value)}/>
+					<button onClick={this.changeInit}>Submit initiative roll</button>
+				</div>
+				:
+				<button onClick={this.resetInit}>Reset Initiative</button>
+				}
 				</div>
 			{!this.state.selected?
 				<div>
 					<br/>
-					<button onClick={this.resetInit}>Reset Initiative</button>
+					{deleteButton}
 				</div>
 
 				:
