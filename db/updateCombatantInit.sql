@@ -1,5 +1,5 @@
 UPDATE combatants
-SET current_hp=${current_hp}
+SET current_init=${current_init}
 WHERE character_id=${id};
 
 SELECT * FROM CombatantInfo ci

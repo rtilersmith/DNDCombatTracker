@@ -49,8 +49,8 @@ module.exports = {
 	playerHealth: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			let player = await db.pcHealth(req.body)
-			res.send(player[0])
+			let players = await db.pcHealth(req.body)
+			res.send(players[0])
 		} catch (error) {
 			console.log('error updating health', error)
 			res.status(500).send(error)
@@ -59,10 +59,16 @@ module.exports = {
 	update: async (req, res)=>{
 		try {
 			let db = req.app.get('db')
-			console.log('body.change', req.body.change, 'params.id', req.params.id)
-			let info = {id:req.params.id, current_hp:req.body.change}
-			let combatant = await db.updateCombatant(info);
-			res.send('good to go')
+			if(req.body.health){
+				let info = {id:req.params.id, current_hp:req.body.health, room: req.body.room}
+				let combatants = await db.updateCombatant(info);
+				res.status(200).send(combatants)
+			}
+			else if(req.body.init){
+				let info ={id:req.params.id, current_init:req.body.init, room: req.body.room}
+				let combatants = await db.updateCombatantInit(info);
+				res.status(200).send(combatants)
+			}
 
 		} catch (error) {
 			console.log('failed to update combatant:', error)

@@ -28,6 +28,7 @@ class CombatPage extends Component{
 		}
 
 		socket.on(`${name}`, function(player){
+			console.log('getting to player', player)
 				changeHealth( +player.change)
 		})
 
@@ -63,9 +64,9 @@ class CombatPage extends Component{
 				Max Health: {health}<br/>
 				Current Health: {curHealth}<br/>
 				<div className="plusMinus">
-				<input className="currentHealth"type='number' onChange={(e)=>{setHealthChangeVal(e.target.value)}}/>
-					<button value={healthChangeVal} className="buttonPlusMinus" onClick={this.addHealth}>+</button>
-					<button value={healthChangeVal} className="buttonPlusMinus" onClick={this.subHealth}>-</button>
+				<input className="currentHealth" type='number' value={healthChangeVal} onChange={(e)=>{setHealthChangeVal(e.target.value)}}/>
+					<button className="buttonPlusMinus" onClick={this.addHealth}>+</button>
+					<button className="buttonPlusMinus" onClick={this.subHealth}>-</button>
 				</div>
 				<br/>
 

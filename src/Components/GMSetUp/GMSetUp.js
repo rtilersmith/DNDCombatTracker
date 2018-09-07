@@ -20,11 +20,11 @@ class GMSetUp extends Component{
 
 	componentDidMount=()=>{
 		let {getCombatants, socket, addEnemy, history } = this.props
-		axios.get('/api/loginCheck').then(res=>{
-			if(!res.data){
-				history.push('/')
-			}
-		})
+		// axios.get('/api/loginCheck').then(res=>{
+		// 	if(!res.data){
+		// 		history.push('/')
+		// 	}
+		// })
 		
 		socket.emit('join')
 
@@ -70,8 +70,8 @@ class GMSetUp extends Component{
 				combatants.map((c, i)=>{
 					return(	
 					<div key={i}>
-						<CombatantList combatant={c} battleId={battleId}/>
-						<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button>
+						<CombatantList combatant={c} deleteButton={<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button> }/>
+						
 					</div>
 				)
 					})
