@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action){
 		case SET_NAME:
 		return {...state, name:action.payload};
 		case SET_HEALTH:
-		return {...state, health:action.payload, curHealth:action.payload};
+		return {...state, health: +action.payload.health, curHealth: +action.payload.curHealth};
 		case SET_AC:
 		return {...state, ac:action.payload};
 		case SET_INIT:
@@ -69,10 +69,10 @@ export function setName(name) {
 	}
 }
 
-export function setHealth(health) {
+export function setHealth(hp) {
 	return {
 		type: SET_HEALTH,
-		payload: +health
+		payload: hp
 	}
 }
 

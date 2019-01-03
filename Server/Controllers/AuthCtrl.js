@@ -42,7 +42,8 @@ module.exports = {
 	},
 	checkLogin: (req, res) => {
 		if(req.session.loggedIn) {
-			res.send(true)
+			let battle = req.session.battle? {code:req.session.battle}: true;
+			res.send(battle) 
 		}
 		else {
 			res.send(false)

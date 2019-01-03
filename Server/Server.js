@@ -89,7 +89,7 @@ io.on('connection', function(socket){
 			socket.emit('battle', {battle})
 			
 			socket.on('gmHealth', function(player){
-				io.to(battle).emit(`${player.name}`, player.change)
+				io.to(battle).emit(`${player.name}`, {...player, battle})
 				io.to(battle).emit('gmHealth', battle)
 			})
 		})
