@@ -77,7 +77,7 @@ class PlayerSetUp extends Component {
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
 				let {ac, cha, con, hp, initiative, dex, str, wis, int, current_hp} = resp.data
-				alert('player found', resp.data.name)
+				resp.data? alert(`player ${resp.data.name} found.`) : alert('No player found')
 				setAc(ac);
 				setCha(cha);
 				setCon(con);
@@ -89,7 +89,7 @@ class PlayerSetUp extends Component {
 				setIntel(int);
 				setBattleId(room);
 				socket.emit('returnPlayer')
-			}).catch(error=>{alert('Could not get player', error)})
+			}).catch(error=>{alert(`Could not get player. Error occured: ${error}`)})
 		}
 	}
 	
