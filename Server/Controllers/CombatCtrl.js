@@ -10,7 +10,7 @@ module.exports = {
 			let listItem = {Character_ID, health, init, room};
 			let part2 = await db.addToList(listItem);
 			res.send(part2[0])
-
+e
 		} catch (error) {
 			console.log('error adding combatant:', error)
 			res.status(500).send(error)

@@ -11,25 +11,26 @@ class CombatPage extends Component{
 		super()
 		this.state={
 			healthChange:'',
+			currentHP:''
 		}
 	}
 
 	componentDidMount(){
-		let {socket, name, changeHealth, history} = this.props;
+		let {socket, name, history, changeHealth, battleId, setHealthChangeVal } = this.props;
 
 		axios.get('/api/loginCheck').then(res=>{
 			if(!res.data){
 				history.push('/')
 			}
+			if(!res.data.code){
+				history.push('/playersetup')
+			}
 		})
 
-		if(!name){
-			history.push('/playersetup')
-		}
-
 		socket.on(`${name}`, function(player){
-			console.log('getting to player', player)
-				changeHealth( +player.change)
+			changeHealth({name, num:player.change, battleId}).then(res=>{
+				setHealthChangeVal(0)
+			})
 		})
 
 	}

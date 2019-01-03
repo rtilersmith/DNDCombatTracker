@@ -76,12 +76,12 @@ class PlayerSetUp extends Component {
 		let {name}=player;
 		if (name){
 			axios.post('api/player', {name, room}).then(resp=>{
-				let {ac, cha, con, hp, initiative, dex, str, wis, int} = resp.data
-				alert('player found', resp.data.name)
+				let {ac, cha, con, hp, initiative, dex, str, wis, int, current_hp} = resp.data
+				resp.data? alert(`player ${resp.data.name} found.`) : alert('No player found')
 				setAc(ac);
 				setCha(cha);
 				setCon(con);
-				setHealth(hp);
+				setHealth({health:hp, curHealth:current_hp});
 				setInit(initiative);
 				setDex(dex);
 				setStrength(str);
@@ -89,7 +89,7 @@ class PlayerSetUp extends Component {
 				setIntel(int);
 				setBattleId(room);
 				socket.emit('returnPlayer')
-			}).catch(error=>{alert('Could not get player', error)})
+			}).catch(error=>{alert(`Could not get player. Error occured: ${error}`)})
 		}
 	}
 	
@@ -126,7 +126,7 @@ class PlayerSetUp extends Component {
 							</div>
 
 							<div className="formSection">	
-							<input placeholder="Health" type='number' onChange={(e)=>{setHealth(e.target.value)}}/>	
+							<input placeholder="Health" type='number' onChange={(e)=>{setHealth({health:e.target.value, curHealth:e.target.value})}}/>	
 							<input placeholder="Armor Class" type='number' onChange={(e)=>setAc(e.target.value)}/>
 							<input placeholder="Initiative Bonus" type='number' onChange={(e)=>setInit(e.target.value)}/>	
 							</div>

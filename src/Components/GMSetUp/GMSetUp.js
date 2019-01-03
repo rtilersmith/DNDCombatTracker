@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import CombatantList from '../CombatantList/CombatantList'
 import AddEnemies from '../AddEnemies/AddEnemies'
 import CustomEnemy from '../CustomEnemy/CustomEnemy'
-import axios from 'axios'
 import { connect } from 'react-redux'
 import { dropCombatant, getCombatants, addEnemy, updateBattleId } from '../../Ducks/gm'
 import { socketConnect } from 'socket.io-react' 
@@ -19,7 +18,7 @@ class GMSetUp extends Component{
 
 
 	componentDidMount=()=>{
-		let {getCombatants, socket, addEnemy, history } = this.props
+		let {getCombatants, socket, addEnemy } = this.props
 		// axios.get('/api/loginCheck').then(res=>{
 		// 	if(!res.data){
 		// 		history.push('/')
@@ -70,7 +69,7 @@ class GMSetUp extends Component{
 				combatants.map((c, i)=>{
 					return(	
 					<div key={i}>
-						<CombatantList combatant={c} deleteButton={<button onClick={()=>dropCombatant(c, battleId=this.state.battleId)}>Remove</button> }/>
+						<CombatantList combatant={c} deleteButton={<button onClick={()=>dropCombatant(c, battleId)}>Remove</button> }/>
 						
 					</div>
 				)
