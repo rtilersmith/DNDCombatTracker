@@ -27,7 +27,7 @@ app.use(session)
 
 app.use( express.static( `${__dirname}/../build` ) );
 
-app.get('/auth/callback', AuthCtrl.auth)
+app.post('/auth/login', AuthCtrl.bcrypt)
 
 app.get('/api/combatants', CombatCtrl.read);
 app.post('/api/combatants', CombatCtrl.create);

@@ -2,9 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { emailInput, passwordInput} from '../../Ducks/shared'
 import { socketConnect } from 'socket.io-react' 
+import { validateEmail } from '../../_utils/methods'
+
 
 
 class Login extends Component{
+
+	constructor(props){
+		super(props)
+
+		this.state = {
+			email: '',
+			password: '',
+			err: ''
+		}
+	}
 	componentDidMount(){
 		let {socket, history, role}=this.props;
 		socket.on('start', function(/*more than on parameter must be an obj*/){})	
@@ -13,15 +25,21 @@ class Login extends Component{
 		}
 	}
 
-	login=(props)=>{
-		let auth0domain = `https://${process.env.REACT_APP_AUTH0_DOMAIN}`
-		let clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
-		let scope = encodeURIComponent("openid profile email");
-		let redirectUri = encodeURIComponent(`${window.location.origin}/auth/callback?role=${this.props.role}`);
-	
-		let location = `${auth0domain}/authorize?client_id=${clientId}&scope=${scope}&redirect_uri=${redirectUri}&response_type=code`
-	
-		window.location = location;
+	login=(e)=>{
+		e.preventDefault();	
+		let { history } = this.props
+		let {password} = this.state;
+		let email = this.state.email.toLowerCase()
+		if(!validateEmail(email)){
+			let err = "This is not a valid email address."
+			return this.setState({err})
+		}
+		axios.post('/auth/login', {email, password, role:this.props.role}).then(results => {
+		 history.push(`/${this.props.role}setup`)
+		}).catch(err => {
+			console.log('err', err)
+			this.setState({err: err.response.data})
+		})
 	}
 
 	render(){
