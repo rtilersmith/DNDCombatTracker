@@ -43,12 +43,13 @@ module.exports = {
 	},
 
 	bcrypt: async (req, res) => {
-		debugger
 		try {
+			debugger
 			let db = req.app.get('db')
 			let { email, password, role } = req.body;
 
 			let user = await db.getUser([email])
+
 			if(!user[0]) {
 			let salt = bcrypt.genSaltSync(10)
 			let hash = bcrypt.hashSync(password, salt);
@@ -65,23 +66,17 @@ module.exports = {
 			if (!authentication) {
 				return res.status(403).send('Incorrect password')
 			}
-
-			if(user[0] && role ) {
-				res.redirect(`${role}setup`)
-			} else {return res.redirect('/')}
 			
-
 			req.session.user = {name: user[0].name, email, loggedIn: true}
 
 			return res.status(200).send(req.session.user)
 		} catch (error) {
 			console.log(`error with user login: ${error}`)
-			return res.sendStatus(500)
 		}
 	},
 
 	checkLogin: (req, res) => {
-		if(req.session.loggedIn) {
+		if(req.session.user.loggedIn) {
 			let battle = req.session.battle? {code:req.session.battle}: true;
 			res.send(battle) 
 		}
