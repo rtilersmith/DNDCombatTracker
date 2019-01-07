@@ -19,11 +19,11 @@ class GMSetUp extends Component{
 
 	componentDidMount=()=>{
 		let {getCombatants, socket, addEnemy } = this.props
-		// axios.get('/api/loginCheck').then(res=>{
-		// 	if(!res.data){
-		// 		history.push('/')
-		// 	}
-		// })
+		axios.get('/api/loginCheck').then(res=>{
+			if(!res.data){
+				history.push('/')
+			}
+		})
 		
 		socket.emit('join')
 

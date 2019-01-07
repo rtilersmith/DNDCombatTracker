@@ -20,13 +20,11 @@ class PlayerSetUp extends Component {
 	}
 
 	componentDidMount(){
-		setTimeout(() => {
 			axios.get('/api/loginCheck').then(res=>{
 				if(!res.data){
 					this.props.history.push('/')
 				}
 			})
-		}, 1000);
 	}
 
 	handleSubmit = (e)=>{

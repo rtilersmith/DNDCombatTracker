@@ -43,6 +43,7 @@ module.exports = {
 	},
 
 	bcrypt: async (req, res) => {
+		debugger
 		try {
 			let db = req.app.get('db')
 			let { email, password, role } = req.body;
@@ -58,7 +59,7 @@ module.exports = {
 
 			return res.status(200).send(req.session.user)
 			}
-			
+
 			let authentication = bcrypt.compareSync(password, user[0].password);
 
 			if (!authentication) {

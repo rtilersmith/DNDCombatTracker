@@ -20,7 +20,7 @@ class Login extends Component{
 	}
 	componentDidMount(){
 		let {socket, history, role}=this.props;
-		socket.on('start', function(/*more than on parameter must be an obj*/){})	
+		socket.on('start')	
 		if(!role){
 			history.push('/')
 		}
@@ -41,12 +41,11 @@ class Login extends Component{
 			return this.setState({err})
 		}
 		axios.post('/auth/login', {email, password, role:this.props.role}).then(results => {
-			console.log(results)
+			history.push(`/${this.props.role}setup`)
 		}).catch(err => {
 			console.log('err', err)
 			this.setState({err: err.response.data})
 		})
-		history.push(`/${this.props.role}setup`)
 	}
 
 	render(){
