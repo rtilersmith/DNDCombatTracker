@@ -41,11 +41,12 @@ class Login extends Component{
 			return this.setState({err})
 		}
 		axios.post('/auth/login', {email, password, role:this.props.role}).then(results => {
-		 history.push(`/${this.props.role}setup`)
+			console.log(results)
 		}).catch(err => {
 			console.log('err', err)
 			this.setState({err: err.response.data})
 		})
+		history.push(`/${this.props.role}setup`)
 	}
 
 	render(){
@@ -53,8 +54,8 @@ class Login extends Component{
 			<div>
 				<h2>Welcome.</h2>
 				<form onSubmit={this.login}>
-					<input type='text' name='email' value={this.state.email} placeholder="Email" onChange={this.handleChange}/>
-					<input type='password' name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange}/>
+					<input required={true} type='text' name='email' value={this.state.email} placeholder="Email" onChange={this.handleChange}/>
+					<input required={true} type='password' name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange}/>
 					{this.props.role==="gm"? <button to="gm" className='link' onClick={this.login}>Login/Register</button> : 
 					<button to="playersetup" className='link'>Login</button> }
 				</form>
