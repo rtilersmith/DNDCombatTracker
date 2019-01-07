@@ -5,7 +5,7 @@ import CustomEnemy from '../CustomEnemy/CustomEnemy'
 import { connect } from 'react-redux'
 import { dropCombatant, getCombatants, addEnemy, updateBattleId } from '../../Ducks/gm'
 import { socketConnect } from 'socket.io-react' 
-// import io from 'socket.io-client'
+import axios from 'axios'
 
 
 class GMSetUp extends Component{
@@ -18,7 +18,7 @@ class GMSetUp extends Component{
 
 
 	componentDidMount=()=>{
-		let {getCombatants, socket, addEnemy } = this.props
+		let {getCombatants, socket, addEnemy, history } = this.props
 		axios.get('/api/loginCheck').then(res=>{
 			if(!res.data){
 				history.push('/')
