@@ -1,5 +1,5 @@
-INSERT INTO users ( auth_id, name, email, picture)
-VALUES (${sub}, ${name}, ${email}, ${picture})
+INSERT INTO users ( name, email, password)
+VALUES (${name}, ${email}, ${password})
 RETURNING *
 -- ;
 -- IF RETURNING DOESN'T WORK, USE THE FOLLOWING:

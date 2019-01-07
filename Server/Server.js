@@ -15,7 +15,7 @@ const express=require('express'),
 		  saveUninitialized: true
 });
 	  
-	  const app=express()
+const app=express()
 massive(process.env.CONNECTION_STRING).then(db=>{
 	app.set('db', db)
 	console.log('db connect success!')
@@ -27,7 +27,7 @@ app.use(session)
 
 app.use( express.static( `${__dirname}/../build` ) );
 
-app.get('/auth/callback', AuthCtrl.auth)
+app.get('/auth/login', AuthCtrl.bcrypt)
 
 app.get('/api/combatants', CombatCtrl.read);
 app.post('/api/combatants', CombatCtrl.create);
