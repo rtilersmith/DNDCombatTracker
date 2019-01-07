@@ -31,7 +31,7 @@ class Login extends Component{
 		this.setState({[name]: value})
 	}
 
-	login=(e)=>{
+	login= async (e)=>{
 		e.preventDefault();	
 		let { history } = this.props
 		let {password} = this.state;
