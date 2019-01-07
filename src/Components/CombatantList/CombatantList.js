@@ -115,12 +115,3 @@ class CombatatantList extends Component{
 }
 
 export default socketConnect(connect(null, { updateHp, updateInit })(onClickOutside(CombatatantList)))
-
-let styles = {
-	button: {
-		textDecoration:'none',
-		border:'none',
-		fontStyle:'bold',
-		fontSize:'100%',
-	}
-}
