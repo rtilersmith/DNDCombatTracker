@@ -20,7 +20,7 @@ class Login extends Component{
 	}
 	componentDidMount(){
 		let {socket, history, role}=this.props;
-		socket.on('start', function(/*more than on parameter must be an obj*/){})	
+		socket.on('start')	
 		if(!role){
 			history.push('/')
 		}
@@ -31,7 +31,7 @@ class Login extends Component{
 		this.setState({[name]: value})
 	}
 
-	login=(e)=>{
+	login= async (e)=>{
 		e.preventDefault();	
 		let { history } = this.props
 		let {password} = this.state;
@@ -41,7 +41,7 @@ class Login extends Component{
 			return this.setState({err})
 		}
 		axios.post('/auth/login', {email, password, role:this.props.role}).then(results => {
-		 history.push(`/${this.props.role}setup`)
+			history.push(`/${this.props.role}setup`)
 		}).catch(err => {
 			console.log('err', err)
 			this.setState({err: err.response.data})
@@ -53,8 +53,8 @@ class Login extends Component{
 			<div>
 				<h2>Welcome.</h2>
 				<form onSubmit={this.login}>
-					<input type='text' name='email' value={this.state.email} placeholder="Email" onChange={this.handleChange}/>
-					<input type='password' name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange}/>
+					<input required={true} type='text' name='email' value={this.state.email} placeholder="Email" onChange={this.handleChange}/>
+					<input required={true} type='password' name='password' value={this.state.password} placeholder="Password" onChange={this.handleChange}/>
 					{this.props.role==="gm"? <button to="gm" className='link' onClick={this.login}>Login/Register</button> : 
 					<button to="playersetup" className='link'>Login</button> }
 				</form>

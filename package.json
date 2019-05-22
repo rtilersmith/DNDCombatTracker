@@ -40,14 +40,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "proxy": {
-    "/auth/callback": {
-      "target": "http://localhost:3456"
-    },
-    "/api": {
-      "target": "http://localhost:3456"
-    }
-  },
+  "proxy": "http://localhost:3456",
   "nodemonConfig": {
     "ext": "js,sql",
     "ignore": [

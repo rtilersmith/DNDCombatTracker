@@ -20,11 +20,11 @@ class PlayerSetUp extends Component {
 	}
 
 	componentDidMount(){
-		axios.get('/api/loginCheck').then(res=>{
-			if(!res.data){
-				this.props.history.push('/')
-			}
-		})
+			axios.get('/api/loginCheck').then(res=>{
+				if(!res.data){
+					this.props.history.push('/')
+				}
+			})
 	}
 
 	handleSubmit = (e)=>{

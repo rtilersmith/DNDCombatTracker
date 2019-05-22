@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { changeHealth, setHealthChangeVal } from '../../Ducks/player'
 import { socketConnect } from 'socket.io-react'
 import axios from 'axios'
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
 
 
 class CombatPage extends Component{
